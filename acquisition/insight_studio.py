@@ -246,7 +246,7 @@ AVEPOINT_SCOUTING_REPORT = {
             "phone": "+1 201 793 1111",
         },
         "secondary_contact": {
-            "name": "IT / Infrastructure Lead",
+            "name": "IT Ryan Anderson",
             "title": "Chief Information Officer",
             "email": "info@avepoint.com",
             "phone": "+1 201 793 1111",
