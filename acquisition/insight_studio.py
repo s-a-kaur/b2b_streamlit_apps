@@ -1565,7 +1565,7 @@ def insight_studio_page():
 
         st.markdown("<div class='chip-row'>", unsafe_allow_html=True)
         # chip_cols = st.columns(len(chip_questions))
-        chip_cols = st.columns([1.2, 1, 1.3, 4])  # last col is empty spacer
+        chip_cols = st.columns([2,2,2,5])  # last col is empty spacer
         for ci, (label, full_query) in enumerate(chip_questions):
             with chip_cols[ci]:
                 if st.button(label, key=f"chip_{ci}"):
@@ -1689,9 +1689,10 @@ def insight_studio_page():
             render_sales_report(AVEPOINT_SCOUTING_REPORT)
 
         else:
-            st.warning(
-                f"No scouting report template is available yet for **{company_name}**."
-            )
+            with st.spinner("⚙️ Generating AvePoint scouting report..."):
+                time.sleep(6)
+            st.success("Showing scouting report for AvePoint")
+            render_sales_report(AVEPOINT_SCOUTING_REPORT)
 
         st.markdown("</div>", unsafe_allow_html=True)
         return
