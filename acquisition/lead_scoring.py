@@ -1061,6 +1061,7 @@ st.session_state.setdefault("run_process", False)
 st.session_state.setdefault("stop_process", False)
 st.session_state.setdefault("step_done", {})
 st.session_state.setdefault("log_html", {})
+st.session_state.setdefault("task_running", {})
 
 # Business context default
 default_context = (
