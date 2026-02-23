@@ -964,86 +964,71 @@ if "lead_prioritization_df" not in st.session_state:
         "⚪ Low — Small education provider with simple connectivity requirements and limited IT spend",
     ],
     "Priority Rationale": [
-        # ACC001 IronBuild
-        "<strong>Rapid national expansion with immediate network scale requirements.</strong>"
-        "<ul>"
-        "<li><strong>High Growth Momentum:</strong> ~12% YoY growth driven by major infrastructure projects</li>"
-        "<li><strong>Active Site Expansion:</strong> 8 → 10 construction sites requiring rapid connectivity rollout</li>"
-        "<li><strong>Workforce & Digital Scale:</strong> Ongoing site hiring and enterprise-wide digital transformation increase demand for secure, standardized connectivity</li>"
-        "<li><strong>Strong Network Readiness:</strong> Existing SD-WAN and mobility enable fast Ethernet upsell</li>"
-        "</ul>",
 
-        # ACC002 BlueHarbor
-        "<strong>Stable regional operations with limited near-term expansion.</strong>"
-        "<ul>"
-        "<li><strong>Moderate ICT Spend:</strong> SaaS-first stack with basic connectivity needs</li>"
-        "<li><strong>Low Growth Urgency:</strong> Minimal expansion or acquisition activity</li>"
-        "<li><strong>Selective Upsell:</strong> Best suited for monitoring and opportunistic engagement</li>"
-        "</ul>",
+    # ACC001 IronBuild
+    "<strong>Expansion-led enterprise with immediate network scaling needs.</strong>"
+    "<ul>"
+    "<li>New site rollouts increasing bandwidth and SD-WAN demand</li>"
+    "<li>Strong digital footprint supports upsell into managed connectivity & security</li>"
+    "</ul>",
 
-        # ACC003 SouthernGrid
-        "<strong>Strategic, long-term infrastructure and security account.</strong>"
-        "<ul>"
-        "<li><strong>Expansion-led Growth:</strong> Acquisition-driven scaling and multi-site complexity</li>"
-        "<li><strong>High Tech Maturity:</strong> Enterprise systems + SIEM + carrier-grade connectivity readiness</li>"
-        "<li><strong>Strong Upsell Path:</strong> Network resilience and security optimization opportunities</li>"
-        "</ul>",
+    # ACC002 BlueHarbor
+    "<strong>Operationally stable account with limited near-term catalysts.</strong>"
+    "<ul>"
+    "<li>Consistent performance but low expansion urgency</li>"
+    "<li>Focus on retention and targeted incremental upsell</li>"
+    "</ul>",
 
-        # ACC004 ApexHealth
-        "<strong>Regulated healthcare provider with growing collaboration and security needs.</strong>"
-        "<ul>"
-        "<li><strong>Multi-Site Operations:</strong> Performance-sensitive clinical locations</li>"
-        "<li><strong>UC & Security Intent:</strong> Collaboration + network optimization signals are strong</li>"
-        "<li><strong>Clear Upsell:</strong> Backup connectivity, traffic prioritization, managed security</li>"
-        "</ul>",
+    # ACC003 SouthernGrid
+    "<strong>Strategic infrastructure account with resilience expansion potential.</strong>"
+    "<ul>"
+    "<li>Complex multi-site footprint supports managed network and security growth</li>"
+    "<li>High-value renewal base with optimization opportunity</li>"
+    "</ul>",
 
-        # ACC005 HorizonAgri
-        "<strong>Low-growth organization with basic connectivity requirements.</strong>"
-        "<ul>"
-        "<li><strong>Limited ICT Footprint:</strong> Standard broadband and productivity tools only</li>"
-        "<li><strong>Low Spend Capacity:</strong> Minimal discretionary ICT investment</li>"
-        "<li><strong>Low Priority:</strong> Better handled via digital/low-touch motions</li>"
-        "</ul>",
+    # ACC004 ApexHealth
+    "<strong>Regulated multi-site healthcare operator requiring secure performance.</strong>"
+    "<ul>"
+    "<li>Compliance-sensitive environments create security uplift potential</li>"
+    "<li>Opportunity for redundancy and collaboration standardization</li>"
+    "</ul>",
 
-        # ACC006 NovaTech
-        "<strong>Global manufacturing enterprise with selective, high-value expansion potential.</strong>"
-        "<ul>"
-        "<li><strong>Very High Growth:</strong> M&A + automation driving transformation programs</li>"
-        "<li><strong>Advanced Tech Stack:</strong> Multi-cloud + ERP + DevOps automation readiness</li>"
-        "<li><strong>High-Value Plays:</strong> Managed services, global interconnect, security uplift</li>"
-        "</ul>",
+    # ACC005 HorizonAgri
+    "<strong>Low-growth account with limited commercial headroom.</strong>"
+    "<ul>"
+    "<li>Basic connectivity footprint with minimal expansion indicators</li>"
+    "</ul>",
 
-        # ACC007 CoastalBuild
-        "<strong>Project-driven construction firm with fluctuating connectivity needs.</strong>"
-        "<ul>"
-        "<li><strong>Moderate Growth:</strong> Demand tied to project pipeline and site ramp-ups</li>"
-        "<li><strong>Deployment Needs:</strong> Rapid rollout and flexible bandwidth for temporary sites</li>"
-        "<li><strong>Tactical Opportunities:</strong> Engage when new projects trigger connectivity spikes</li>"
-        "</ul>",
+    # ACC006 NovaTech
+    "<strong>Transformation-driven global manufacturer with enterprise-scale opportunity.</strong>"
+    "<ul>"
+    "<li>Automation and cloud programs support global interconnect expansion</li>"
+    "<li>Strong candidate for managed services and security consolidation</li>"
+    "</ul>",
 
-        # ACC008 MetroServe
-        "<strong>Professional services firm with stable collaboration-centric operations.</strong>"
-        "<ul>"
-        "<li><strong>Steady Growth:</strong> Consistent services expansion without major disruption signals</li>"
-        "<li><strong>Moderate Tech Complexity:</strong> QoS, secure access, and performance improvements fit well</li>"
-        "<li><strong>Selective Upsell:</strong> Monitor for collaboration/security upgrade triggers</li>"
-        "</ul>",
+    # ACC007 CoastalBuild
+    "<strong>Project-driven account with cyclical connectivity demand.</strong>"
+    "<ul>"
+    "<li>Engage on new site activations and short-term bandwidth spikes</li>"
+    "</ul>",
 
-        # ACC009 TerraLink
-        "<strong>Mining services organization scaling IoT and remote operations.</strong>"
-        "<ul>"
-        "<li><strong>Growth + IoT Expansion:</strong> Fleet monitoring and telemetry scaling across sites</li>"
-        "<li><strong>Strong Fit:</strong> IoT, wireless backhaul, resilient connectivity requirements</li>"
-        "<li><strong>Clear Upsell:</strong> IoT connectivity + managed resilience/security services</li>"
-        "</ul>",
+    # ACC008 MetroServe
+    "<strong>Steady services firm with moderate optimization potential.</strong>"
+    "<ul>"
+    "<li>Selective opportunity in secure access and performance tuning</li>"
+    "</ul>",
 
-        # ACC010 EduCore
-        "<strong>Small education provider with early-stage digital adoption.</strong>"
-        "<ul>"
-        "<li><strong>Minimal Growth:</strong> Low YoY growth and limited modernization activity</li>"
-        "<li><strong>Low Spend:</strong> Entry-level connectivity needs only</li>"
-        "<li><strong>Low Priority:</strong> Maintain coverage with lightweight sales motion</li>"
-        "</ul>",
+    # ACC009 TerraLink
+    "<strong>IoT-enabled remote operations driving resilient network demand.</strong>"
+    "<ul>"
+    "<li>Strong alignment for IoT connectivity, wireless scaling, and resilience upgrades</li>"
+    "</ul>",
+
+    # ACC010 EduCore
+    "<strong>Small footprint with limited expansion runway.</strong>"
+    "<ul>"
+    "<li>Maintain renewal coverage; low-touch commercial motion appropriate</li>"
+    "</ul>",
     ],
 }
     st.session_state["lead_prioritization_df"] = pd.DataFrame(mock_data)
@@ -1933,9 +1918,22 @@ def _format_account_summary_table_html() -> str:
         if yoy_growth and yoy_growth not in ["nan", "—", ""]:
             growth_lines.append(f"<div class='muted'><strong>YoY:</strong> {html.escape(yoy_growth)}</div>")
         
-        growth_text = "".join(growth_lines) if growth_lines else "<div class='muted'>—</div>"
-        signal_text = "".join(signal_tags) if signal_tags else "<span class='muted'>—</span>"
-        growth_html = f"{growth_text}<div style='margin-top:6px;'>{signal_text}</div>"
+        # growth_text = "".join(growth_lines) if growth_lines else "<div class='muted'>—</div>"
+        # signal_text = "".join(signal_tags) if signal_tags else "<span class='muted'>—</span>"
+        # growth_html = f"{growth_text}<div style='margin-top:6px;'>{signal_text}</div>"
+
+
+        growth_text = "".join(growth_lines) if growth_lines else ""
+        signal_text = "".join(signal_tags) if signal_tags else ""
+
+        if not growth_text and not signal_text:
+            growth_html = "<div class='muted'>—</div>"
+        else:
+            growth_html = ""
+            if growth_text:
+                growth_html += growth_text
+            if signal_text:
+                growth_html += f"<div style='margin-top:6px;'>{signal_text}</div>"
         
         # Intent WITH KEYWORDS
         intent_items = []
@@ -2325,7 +2323,7 @@ def _format_product_catalog_html() -> str:
     <!-- TELCO PRODUCTS -->
     <div class="catalog-box catalog-telco">
         <div style="font-size:13px;font-weight:800;color:#6b00b8;margin-bottom:8px;">
-            Connectivity Solutions
+            Telco Product Portfolio
         </div>
     """
 
