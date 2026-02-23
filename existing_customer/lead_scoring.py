@@ -880,7 +880,7 @@ if "lead_prioritization_df" not in st.session_state:
     ],
     "Priority": ["🟢 High", "🟡 Medium", "🟢 High", "🟡 Medium", "🔴 Low", "🟢 High", "🟡 Medium", "🟡 Medium", "🟢 High", "🔴 Low"],
     "Growth Signals": [
-        "⭐ High — Infra expansion + partnerships; 12% YoY growth",
+        "⭐ High — Infra expansion + partnerships; active hiring & enterprise digital transformation; 12% YoY growth",
         "🟡 Medium — Stable ops; 4% YoY growth",
         "⭐ Very High — Acquisition-led APAC expansion; 16% YoY",
         "🟡 Medium — Healthcare expansion; 8% YoY growth",
@@ -892,55 +892,55 @@ if "lead_prioritization_df" not in st.session_state:
         "⚪ Low — Minimal growth; 1% YoY",
     ],
     "Tech Maturity": [
-        "⭐ High — Enterprise networking, cloud (AWS/Azure), security & analytics",
-        "🟡 Developing — SaaS-first with basic cloud & SMB networking",
-        "⭐ Advanced — Enterprise systems, private cloud, SIEM, carrier-grade connectivity",
-        "⭐ High — Healthcare tech with collaboration & compliance focus",
-        "⚪ Basic — Productivity tools with standard broadband",
-        "⭐ Advanced — Global multi-cloud, ERP, data/AI, DevOps automation",
-        "🟡 Developing — Project SaaS with temporary site connectivity",
-        "🟡 Developing — Client SaaS with moderate infra complexity",
-        "⭐ High — IoT, analytics, wireless backhaul for operations",
-        "⚪ Low — Basic digital tools for online delivery",
+        "⭐ High — Mature enterprise stack with advanced networking, cloud (AWS/Azure), security, and analytics",
+        "🟡 Developing — SaaS-first environment with basic cloud usage and SMB-grade networking",
+        "⭐ Advanced — Enterprise-scale systems with private cloud, SIEM, and carrier-grade connectivity",
+        "⭐ High — Healthcare technology stack with strong collaboration tools and compliance focus",
+        "⚪ Basic — Limited digital maturity, primarily productivity tools and standard broadband",
+        "⭐ Advanced — Global multi-cloud footprint with ERP, data platforms, AI, and DevOps automation",
+        "🟡 Developing — Project-based SaaS usage with temporary and site-specific connectivity",
+        "🟡 Developing — Client-facing SaaS supported by moderate infrastructure complexity",
+        "⭐ High — Operational IoT, analytics, and wireless backhaul supporting field operations",
+        "⚪ Low — Minimal digital tools supporting basic online service delivery",
     ],
     "Tech Relevancy": [
-        "🟡 Medium — Upsell via Ethernet, security, bandwidth scaling",
-        "🟡 Medium — SD-WAN, secure internet, scalable connectivity",
-        "🟡 Medium — Security & network optimization upsell",
-        "🟡 Medium — Backup links, traffic prioritization, security",
-        "⚪ Low — Basic connectivity relevance only",
-        "🟡 Medium — Global interconnect & managed services",
-        "🟡 Medium — Rapid deployment & flexible bandwidth",
-        "🟡 Medium — QoS, performance, secure access",
-        "🟡 Medium — IoT scale-out & coverage expansion",
-        "⚪ Low — Entry-level connectivity only",
+        "🟡 Medium — Clear opportunity to upsell Ethernet, security, and bandwidth expansion",
+        "🟡 Medium — Suitable for SD-WAN, secure internet, and scalable connectivity solutions",
+        "🟡 Medium — Strong relevance for security enhancements and network optimization",
+        "🟡 Medium — Backup connectivity, traffic prioritization, and security are key needs",
+        "⚪ Low — Limited relevance beyond basic connectivity services",
+        "🟡 Medium — Fit for global interconnect and managed network services",
+        "🟡 Medium — Requires rapid deployment and flexible, short-term bandwidth",
+        "🟡 Medium — Needs QoS, performance optimization, and secure access",
+        "🟡 Medium — Opportunity to scale IoT connectivity and coverage",
+        "⚪ Low — Entry-level connectivity only, with minimal expansion scope",
     ],
     "Product History & Usage": [
-        "⭐ High — Long tenure, multi-product, strong renewal growth",
-        "🟡 Medium — Limited products, stable TCV, selective upsell",
-        "⭐ High — Deep adoption, strong TCV, multiple renewals",
-        "🟡 Medium — Multi-product, healthy TCV, moderate expansion",
-        "⚪ Low — Single product, flat TCV, minimal expansion",
-        "⭐ High — Strategic account, broad adoption, strong renewal growth",
-        "🟡 Medium — Growing usage, improving TCV, limited renewal depth",
-        "🟡 Medium — Stable tenure, selective adoption, modest growth",
-        "⭐ High — Diversified products, strong TCV, frequent renewals",
-        "⚪ Low — New account, low usage, no expansion",
+        "⭐ High — Long tenure with multi-product adoption and strong renewal growth",
+        "🟡 Medium — Limited product footprint with stable TCV and selective upsell potential",
+        "⭐ High — Deep product adoption with strong TCV and multiple renewals",
+        "🟡 Medium — Healthy multi-product usage with moderate expansion",
+        "⚪ Low — Single-product usage with flat TCV and minimal growth",
+        "⭐ High — Strategic account with broad adoption and consistent renewals",
+        "🟡 Medium — Growing usage and improving TCV, but limited renewal depth",
+        "🟡 Medium — Stable tenure with selective adoption and modest growth",
+        "⭐ High — Diversified product mix with strong TCV and frequent renewals",
+        "⚪ Low — New account with low usage and no expansion history",
     ],
     "Est. Potential Spend": [
-        "Very High — Large infra player; high network & service expansion potential",
-        "Medium — Stable regional; moderate connectivity & SD-WAN growth",
-        "Very High — Critical utility; strategic long-term telco & security account",
-        "High — Multi-site healthcare; strong fit for UCaaS & managed services",
-        "Low — Small advisory; minimal ICT demand, low-touch sales",
-        "Very High — Global manufacturing; flagship enterprise transformation account",
-        "Medium — Project-driven; short-term connectivity & service needs",
-        "Medium — Professional services; stable collaboration & connectivity needs",
-        "High — Mining services; IoT, resilient networks & managed services opportunity",
-        "Very Low — Small education; limited ICT budget, digital-only sales",
+        "Very High — Large infrastructure player with significant network and service expansion potential",
+        "Medium — Stable regional business with moderate connectivity and SD-WAN growth",
+        "Very High — Critical utility with long-term strategic telco and security potential",
+        "High — Multi-site healthcare provider well suited for UCaaS and managed services",
+        "Low — Small advisory firm with minimal ICT demand and low-touch sales needs",
+        "Very High — Global manufacturer and flagship enterprise transformation opportunity",
+        "Medium — Project-driven business with short-term connectivity and service needs",
+        "Medium — Professional services firm with stable collaboration and connectivity demand",
+        "High — Mining services player with strong need for IoT, resilient networks, and managed services",
+        "Very Low — Small education provider with limited ICT budget and digital-only requirements",
     ],
     "Intent Signals": [
-        "⭐ Very High — Strong focus on networking, SD-WAN, IoT & security",
+        "⭐ Very High — Strong focus on network infrastructure, SD-WAN, IoT & AI-driven automation",
         "⚪ No intent — Minimal research in last 90 days",
         "⭐ Very High — Active research in digital infrastructure & security",
         "🟡 High — Clear interest in collaboration & UCaaS with network optimization",
@@ -952,16 +952,16 @@ if "lead_prioritization_df" not in st.session_state:
         "⚪ No intent — Minimal research in last 90 days",
     ],
     "GTM Fit": [
-        "⭐ High — Multi-site construction, strong network & expansion needs",
-        "🟡 Medium — Regional logistics, stable connectivity, moderate services",
-        "⭐ Very High — Critical utility, regulated ops, complex national footprint",
-        "🟡 High — Multi-site healthcare, secure & compliant collaboration",
-        "⚪ Low — Small advisory, limited ICT, low-touch sales",
-        "⭐ Very High — Global manufacturing, mission-critical networks & cloud",
-        "🟡 Medium — Project-driven developer, short-term ICT needs",
-        "🟡 Medium — Professional services, collaboration & secure access priority",
-        "⭐ High — Mining services, remote ops & IoT connectivity requirements",
-        "⚪ Low — Small education, simple connectivity, limited IT spend",
+        "⭐ High — Strong fit driven by multi-site construction operations and expanding network requirements",
+        "🟡 Medium — Regional logistics business with stable connectivity needs and moderate services opportunity",
+        "⭐ Very High — Excellent GTM fit as a critical utility with regulated operations and a complex national footprint",
+        "🟡 High — Multi-site healthcare organization requiring secure, compliant collaboration solutions",
+        "⚪ Low — Small advisory firm with limited ICT needs and low-touch sales potential",
+        "⭐ Very High — Global manufacturing enterprise with mission-critical networks and cloud infrastructure",
+        "🟡 Medium — Project-driven developer with short-term and site-specific ICT requirements",
+        "🟡 Medium — Professional services firm prioritizing collaboration tools and secure access",
+        "⭐ High — Mining services operator with remote operations and strong IoT connectivity needs",
+        "⚪ Low — Small education provider with simple connectivity requirements and limited IT spend",
     ],
     "Priority Rationale": [
         # ACC001 IronBuild
@@ -969,6 +969,7 @@ if "lead_prioritization_df" not in st.session_state:
         "<ul>"
         "<li><strong>High Growth Momentum:</strong> ~12% YoY growth driven by major infrastructure projects</li>"
         "<li><strong>Active Site Expansion:</strong> 8 → 10 construction sites requiring rapid connectivity rollout</li>"
+        "<li><strong>Workforce & Digital Scale:</strong> Ongoing site hiring and enterprise-wide digital transformation increase demand for secure, standardized connectivity</li>"
         "<li><strong>Strong Network Readiness:</strong> Existing SD-WAN and mobility enable fast Ethernet upsell</li>"
         "</ul>",
 
@@ -1053,6 +1054,7 @@ if "lead_prioritization_df" not in st.session_state:
 # --------------------------------------------------
 
 PRODUCT_CATALOG = [
+    # ================== Telco Products =============
     # ===== NETWORKS =====
     {"category":"Networks","sub":"Software Defined Networks","url":"https://example.com/products/networks/software-defined-networks","desc":"Centralized, programmable networking that automates policy, segmentation, and traffic optimization across sites and clouds","benefits":["Programmable infrastructure for business agility","Optimized routing and application performance","Elastic scalability for new sites and regions","Lower operational overhead via automation"],"segments":"Mid-Market, Enterprise","industries":"Retail, Finance, Healthcare, Manufacturing, Government","flags":{"multi_site":True,"resilience":True,"zero_trust":True,"real_time":True,"edge_compute":False,"cost_opt":False},"complexity":"Medium","flexibility":"Flexible"},
     {"category":"Networks","sub":"Adaptive Networks","url":"https://example.com/products/networks/adaptive-networks","desc":"Modular connectivity that flexes across access types (wired/wireless) with optional security and rapid site enablement","benefits":["Flexible access options (private WAN, internet, wireless)","Integrated security controls for branches","Fast setup for temporary or new sites","Commercial flexibility to support change"],"segments":"Small, Mid-Market, Enterprise","industries":"Retail, Logistics, Construction, Events, Agriculture","flags":{"multi_site":True,"resilience":True,"zero_trust":True,"real_time":False,"edge_compute":False,"cost_opt":True},"complexity":"Low","flexibility":"Flexible"},
@@ -1082,10 +1084,28 @@ PRODUCT_CATALOG = [
     {"category":"Unified Communications","sub":"Contact Center Solutions","url":"https://example.com/products/unified-communications/contact-center-solutions","desc":"Cloud contact center capabilities for omnichannel engagement integrated with CRM and workforce tools","benefits":["Improves customer experience through integration","Omnichannel engagement and routing","Cloud scalability and faster rollout","Can reduce costs while improving CX"],"segments":"Mid-Market, Enterprise","industries":"Retail, Finance, Healthcare, Utilities, Government","flags":{"multi_site":True,"resilience":True,"zero_trust":False,"real_time":True,"edge_compute":False,"cost_opt":True},"complexity":"Medium","flexibility":"Standard"},
     {"category":"Unified Communications","sub":"UC Consulting","url":"https://example.com/products/unified-communications/uc-consulting","desc":"Advisory to optimize collaboration, voice, and CX—roadmaps, adoption, and operating model improvements","benefits":["CX and collaboration strategy support","Improves teamwork and communications","Adoption planning and change enablement","Roadmaps and governance guidance"],"segments":"Mid-Market, Enterprise","industries":"All Industries","flags":{"multi_site":False,"resilience":False,"zero_trust":False,"real_time":False,"edge_compute":False,"cost_opt":True},"complexity":"Low","flexibility":"Flexible"},
     {"category":"Unified Communications","sub":"Calling & Collaboration","url":"https://example.com/products/unified-communications/calling-and-collaboration","desc":"Cloud calling and collaboration to enable secure communication for remote and on-site teams","benefits":["Boosts productivity with modern collaboration tools","Supports remote and hybrid work","Integrates with common productivity suites","Simplifies deployment and management"],"segments":"SOHO, Small, Mid-Market, Enterprise","industries":"All Industries","flags":{"multi_site":True,"resilience":False,"zero_trust":False,"real_time":True,"edge_compute":False,"cost_opt":False},"complexity":"Low","flexibility":"Flexible"},
+
+    # ============= SOVEREIGN AI ================
+    {"category":"Infrastructure","sub":"AI Infrastructure GPUaaS","url":"https://example.com/products/sovereign-ai/ai-infrastructure-gpuaas","desc":"In-country GPU-as-a-Service enabling secure, high-performance AI workloads with full data residency compliance.","benefits":["Dedicated GPU clusters","Sovereign cloud hosting","AI workload isolation","High-performance compute"],"segments":"Mid Market, Enterprise","industries":"Construction, Infrastructure, Energy, Government","flags":{"sovereign":True,"secure_by_design":True,"real_time_ai":False,"edge_enabled":False,"enterprise_scale":True},"complexity":"High","flexibility":"Long-term"},
+    {"category":"Infrastructure","sub":"Edge AI & Connected Sites","url":"https://example.com/products/sovereign-ai/edge-ai-connected-sites","desc":"Edge AI nodes deployed at operational sites, integrated with managed SD-WAN and secure connectivity.","benefits":["Edge compute appliances","AI-ready connectivity","IoT integration","Low-latency processing"],"segments":"Mid Market, Enterprise","industries":"Construction, Mining, Utilities, Infrastructure","flags":{"sovereign":True,"secure_by_design":True,"real_time_ai":True,"edge_enabled":True,"enterprise_scale":True},"complexity":"High","flexibility":"Flexible"},
+
+    {"category":"Platform Services","sub":"Private AI Platform","url":"https://example.com/products/sovereign-ai/private-ai-platform","desc":"Sovereign private AI platform with localized LLMs/SLMs and embedded governance frameworks.","benefits":["Localized domain models","AIOps/FinOps framework","Governance validation engine","Secure data isolation"],"segments":"Mid Market, Enterprise","industries":"Construction, Energy, Government, Transportation","flags":{"sovereign":True,"secure_by_design":True,"real_time_ai":False,"edge_enabled":False,"enterprise_scale":True},"complexity":"High","flexibility":"Long-term"},
+    {"category":"Platform Services","sub":"AI Agents-as-a-Service","url":"https://example.com/products/sovereign-ai/ai-agents-as-a-service","desc":"Pre-configured sovereign AI agents supporting enterprise functions such as Procurement, Legal, PMO, IT and Safety.","benefits":["Domain-trained agents","Workflow integration","Secure data handling","Role-based access"],"segments":"Mid Market, Enterprise","industries":"Construction, Infrastructure, Engineering Services","flags":{"sovereign":True,"secure_by_design":True,"real_time_ai":False,"edge_enabled":False,"enterprise_scale":True},"complexity":"Medium","flexibility":"Flexible"},
+    {"category":"Platform Services","sub":"Responsible AI & Compliance Checker","url":"https://example.com/products/sovereign-ai/responsible-ai-compliance-checker","desc":"Framework ensuring AI governance, regulatory compliance, and data residency adherence.","benefits":["Policy validation engine","Compliance monitoring dashboard","Audit reporting tools"],"segments":"Mid Market, Enterprise","industries":"Construction, Energy, Government, Utilities","flags":{"sovereign":True,"secure_by_design":True,"real_time_ai":False,"edge_enabled":False,"enterprise_scale":True},"complexity":"Medium","flexibility":"Standard"},
+
+    {"category":"Horizontal AI Services","sub":"AI-Enhanced Managed SD-WAN","url":"https://example.com/products/sovereign-ai/ai-enhanced-managed-sdwan","desc":"AI-driven network optimization embedded into managed SD-WAN services.","benefits":["Traffic intelligence","Anomaly detection","Predictive performance management"],"segments":"Mid Market, Enterprise","industries":"Construction, Retail, Logistics, Energy","flags":{"sovereign":True,"secure_by_design":True,"real_time_ai":True,"edge_enabled":False,"enterprise_scale":True},"complexity":"Medium","flexibility":"Standard"},
+    {"category":"Horizontal AI Services","sub":"AI-Powered Cybersecurity","url":"https://example.com/products/sovereign-ai/ai-powered-cybersecurity","desc":"AI-enabled SOC automation and advanced threat detection within sovereign infrastructure.","benefits":["AI threat detection","Automated incident response","Behavioral analytics"],"segments":"Mid Market, Enterprise","industries":"Construction, Energy, Utilities, Government","flags":{"sovereign":True,"secure_by_design":True,"real_time_ai":True,"edge_enabled":False,"enterprise_scale":True},"complexity":"High","flexibility":"Standard"},
+    {"category":"Horizontal AI Services","sub":"Enterprise Sovereign CoPilot","url":"https://example.com/products/sovereign-ai/enterprise-sovereign-copilot","desc":"Secure enterprise-grade AI assistant deployed within sovereign infrastructure.","benefits":["Private LLM","Enterprise data integration","Role-based access control"],"segments":"Mid Market, Enterprise","industries":"Construction, Infrastructure, Engineering, Energy","flags":{"sovereign":True,"secure_by_design":True,"real_time_ai":False,"edge_enabled":False,"enterprise_scale":True},"complexity":"Medium","flexibility":"Flexible"},
+
+    {"category":"Vertical AI Services","sub":"AI Site Safety (Computer Vision)","url":"https://example.com/products/sovereign-ai/ai-site-safety","desc":"Computer vision models for real-time safety monitoring across operational sites.","benefits":["PPE detection","Hazard identification","Real-time alerts"],"segments":"Mid Market, Enterprise","industries":"Construction, Infrastructure, Mining","flags":{"sovereign":True,"secure_by_design":True,"real_time_ai":True,"edge_enabled":True,"enterprise_scale":True},"complexity":"High","flexibility":"Standard"},
+    {"category":"Vertical AI Services","sub":"Predictive Maintenance","url":"https://example.com/products/sovereign-ai/predictive-maintenance","desc":"AI models leveraging IoT telemetry to predict heavy equipment failures.","benefits":["IoT data ingestion","Failure prediction models","Maintenance analytics dashboard"],"segments":"Mid Market, Enterprise","industries":"Construction, Mining, Utilities, Infrastructure","flags":{"sovereign":True,"secure_by_design":True,"real_time_ai":True,"edge_enabled":True,"enterprise_scale":True},"complexity":"High","flexibility":"Long-term"},
+    {"category":"Vertical AI Services","sub":"Digital Twin & Risk Forecasting","url":"https://example.com/products/sovereign-ai/digital-twin-risk-forecasting","desc":"AI-powered digital twin models enabling project risk forecasting and scenario simulation.","benefits":["Scenario modeling","Predictive analytics","Cost overrun detection"],"segments":"Mid Market, Enterprise","industries":"Construction, Infrastructure, Transportation, Energy","flags":{"sovereign":True,"secure_by_design":True,"real_time_ai":False,"edge_enabled":False,"enterprise_scale":True},"complexity":"High","flexibility":"Long-term"},
+    {"category":"Vertical AI Services","sub":"Workforce Optimization","url":"https://example.com/products/sovereign-ai/workforce-optimization","desc":"AI-driven workforce planning and productivity optimization solutions.","benefits":["Resource allocation algorithms","Shift optimization engine","Performance analytics"],"segments":"Mid Market, Enterprise","industries":"Construction, Engineering Services, Infrastructure","flags":{"sovereign":True,"secure_by_design":True,"real_time_ai":False,"edge_enabled":False,"enterprise_scale":True},"complexity":"Medium","flexibility":"Flexible"},
 ]
 
 
-CATEGORY_ICONS = {"Cloud":"☁️","Security":"🔒","Networks":"🌐","Mobility Solutions":"📱","Internet of Things":"🔗","Unified Communications":"💬"}
+CATEGORY_ICONS = {"Cloud":"☁️","Security":"🔒","Networks":"🌐","Mobility Solutions":"📱","Internet of Things":"🔗","Unified Communications":"💬",
+                  "Infrastructure": "🏗️", "Platform Services": "🧠", "Horizontal AI Services": "🧩", "Vertical AI Services": "🏛️"}
 
 CAP_FLAG_MAP = {
     "multi_site": "Multi-Site",
@@ -1094,6 +1114,13 @@ CAP_FLAG_MAP = {
     "real_time": "Real-Time",
     "edge_compute": "Edge Computing",
     "cost_opt": "Cost Optimized"
+}
+
+SOVEREIGN_AI_FLAGS = {         
+    "secure_by_design": "Secure-by-Design", 
+    "real_time_ai": "Real-Time AI",    
+    "edge_enabled": "Edge AI Enabled",    
+    "enterprise_scale": "Enterprise Scale"  
 }
 
 # --------------------------------------------------
@@ -1897,6 +1924,8 @@ def _format_account_summary_table_html() -> str:
             signal_tags.append("<span class='pill pill-green'>✓ Partnership</span>")
         if r.get("Hiring") == "✓ Yes":
             signal_tags.append("<span class='pill pill-green'>✓ Hiring</span>")
+        if r.get("Digital Transformation") == "✓ Yes":
+            signal_tags.append("<span class='pill pill-green'>✓ Digital Transformation</span>")
         
         growth_lines = []
         if tcv_growth and tcv_growth not in ["nan", "—", "0%"]:
@@ -2240,16 +2269,74 @@ def _format_product_catalog_html() -> str:
             display: flex; align-items: center; justify-content: center; 
             border: 1px dashed #e2e8f0; border-radius: 6px; color: #cbd5e1; 
         }
+        /* Top-level product boxes */
+        .catalog-box {
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 12px;
+            margin-bottom: 16px;
+        }
+
+        /* Telco theme */
+        .catalog-telco {
+            background: #f5f3ff;
+        }
+        .catalog-telco .shelf-title {
+            color: #6b00b8;
+        }
+        .catalog-telco .prod-name {
+            color: #0f172a;
+        }
+
+        /* Sovereign AI – recommender indigo theme */
+        .catalog-sovereign {
+            background: #eef2ff;              /* same as recommender */
+            border-color: #c7d2fe;
+        }
+        .catalog-sovereign .shelf-summary {
+            background: #eef2ff;
+        }
+        .catalog-sovereign .shelf-title {
+            color: #1e3a8a;                   /* recommender text */
+            font-weight: 800;
+        }
+        .catalog-sovereign .prod-name {
+            color: #1e3a8a;
+        }
+        .catalog-sovereign .prod-desc {
+            color: #475569;
+        }
+        .catalog-sovereign .p-tag {
+            background: #e0e7ff;
+            color: #1e3a8a;
+            border-color: #c7d2fe;
+        }
     </style>
     """
 
-    html_out = f"{styles}<div class='cat-container'>"
+    TELCO_CATEGORIES = ["Networks", "Cloud", "Security", "Mobility Solutions", "Internet of Things", "Unified Communications"]
 
+    SOVEREIGN_AI_CATEGORIES = {"Infrastructure", "Platform Services", "Horizontal AI Services", "Vertical AI Services"}
+
+    html_out = f"""
+    {styles}
+    <div class='cat-container'>
+
+    <!-- TELCO PRODUCTS -->
+    <div class="catalog-box catalog-telco">
+        <div style="font-size:13px;font-weight:800;color:#6b00b8;margin-bottom:8px;">
+            Connectivity Solutions
+        </div>
+    """
+
+    # -------- TELCO LOOP ----------
     for cat_name, products in catalog_by_cat.items():
+        if cat_name not in TELCO_CATEGORIES:
+            continue
+
         icon = CATEGORY_ICONS.get(cat_name, "📦")
-        # Keep first category open by default
-        is_open = "open" if cat_name == list(catalog_by_cat.keys())[0] else ""
-        
+        is_open = "open" if cat_name == TELCO_CATEGORIES[0] else ""
+
         html_out += f"""
         <details class="shelf" {is_open}>
             <summary class="shelf-summary">
@@ -2259,20 +2346,20 @@ def _format_product_catalog_html() -> str:
             <div class="prod-grid">
         """
 
-        for i in range(max(len(products), 4)):
+        for i in range(len(products)):
             if i < len(products):
                 p = products[i]
-                chips = "".join([
+                chips = "".join(
                     f"<span class='p-tag'>{label}</span>"
-                    for flag, label in CAP_FLAG_MAP.items() if p["flags"].get(flag)
-                ])
-                
-                # Use .title() for proper casing of industries/segments
+                    for flag, label in CAP_FLAG_MAP.items()
+                    if p["flags"].get(flag)
+                )
+
                 html_out += f"""
                 <div class="prod-card">
                     <div class="prod-name">{html.escape(p['sub'])}</div>
                     <div class="prod-desc">{html.escape(p['desc'])}</div>
-                    
+
                     <div class="meta-stack">
                         <div class="meta-item">
                             <span class="meta-label">Segment:</span>
@@ -2286,19 +2373,86 @@ def _format_product_catalog_html() -> str:
 
                     <div class="card-ft">
                         <div class="tag-wrap">{chips}</div>
-                        </div>
-                        <div class="card-link-row">
+                    </div>
+                    <div class="card-link-row">
                         <a href="{p['url']}" target="_blank" class="p-link">Details →</a>
                     </div>
-
                 </div>
                 """
             else:
                 html_out += "<div class='prod-card empty-box'>—</div>"
-        
+
         html_out += "</div></details>"
 
-    html_out += "</div>"
+    html_out += "</div>"  # END TELCO BOX
+
+
+    # -------- SOVEREIGN AI ----------
+    html_out += """
+    <div class="catalog-box catalog-sovereign">
+        <div style="font-size:13px;font-weight:800;color:#1e3a8a;margin-bottom:8px;">
+            Sovereign AI Products
+        </div>
+    """
+
+    for cat_name, products in catalog_by_cat.items():
+        if cat_name not in SOVEREIGN_AI_CATEGORIES:
+            continue
+
+        icon = CATEGORY_ICONS.get(cat_name, "🧠")
+
+        html_out += f"""
+        <details class="shelf">
+            <summary class="shelf-summary">
+                <div class="shelf-title">{icon} {html.escape(cat_name)}</div>
+                <span style="font-size: 10px; color: #94a3b8;">{len(products)} Products</span>
+            </summary>
+            <div class="prod-grid">
+        """
+
+        for i in range(len(products)):
+            if i < len(products):
+                p = products[i]
+                chips = "".join(
+                    f"<span class='p-tag'>{label}</span>"
+                    for flag, label in SOVEREIGN_AI_FLAGS.items()
+                    if p["flags"].get(flag)
+                )
+
+                html_out += f"""
+                <div class="prod-card">
+                    <div class="prod-name">{html.escape(p['sub'])}</div>
+                    <div class="prod-desc">{html.escape(p['desc'])}</div>
+
+                    <div class="meta-stack">
+                        <div class="meta-item">
+                            <span class="meta-label">Segment:</span>
+                            <span class="meta-val">{html.escape(p['segments'].title())}</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">Industry:</span>
+                            <span class="meta-val">{html.escape(p['industries'].title())}</span>
+                        </div>
+                    </div>
+
+                    <div class="card-ft">
+                        <div class="tag-wrap">{chips}</div>
+                    </div>
+                    <div class="card-link-row">
+                        <a href="{p['url']}" target="_blank" class="p-link">Details →</a>
+                    </div>
+                </div>
+                """
+            else:
+                html_out += "<div class='prod-card empty-box'>—</div>"
+
+        html_out += "</div></details>"
+
+    html_out += """
+    </div>  <!-- end sovereign box -->
+    </div>  <!-- end container -->
+    """
+
     return html_out
 
 def _format_recommendations_table_html() -> str:
@@ -2479,6 +2633,7 @@ def _format_recommendations_table_html() -> str:
               <th style="min-width: 280px;">Recommendation 1</th>
               <th style="min-width: 280px;">Recommendation 2</th>
               <th style="min-width: 280px;">Recommendation 3</th>
+              <th style="min-width: 280px;">Sovereign AI Products</th>
             </tr>
           </thead>
           <tbody>
@@ -2508,7 +2663,7 @@ def _format_recommendations_table_html() -> str:
           </td>
         """
         
-        for i in range(3):
+        for i in range(4):
             if i < len(rows):
                 r = rows.iloc[i]
                 # DON'T escape the rationale - it contains HTML that should render

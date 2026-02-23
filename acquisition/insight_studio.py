@@ -208,6 +208,289 @@ A_MARK_SCOUTING_REPORT: Dict[str, Any] = {
 }
 
 
+
+# ================================================================
+#  AVEPOINT SCOUTING REPORT DATA
+# ================================================================
+AVEPOINT_SCOUTING_REPORT = {
+    "company_name": "AvePoint",
+    "company_overview": {
+        "summary": (
+            "AvePoint provides a unified data protection platform for enterprises, "
+            "focusing on security, governance, and resilience in the AI-driven workplace. "
+            "They help organizations manage their data across the full digital lifecycle. "
+            "Dual-listed on Nasdaq and SGX, AvePoint is accelerating global growth through "
+            "SaaS expansion, MSP partnerships, and AI-driven data protection capabilities, "
+            "targeting $1B ARR by 2029."
+        ),
+        "details": {
+            "company_name": "AvePoint",
+            "headquarters": "525 Washington Blvd, Suite 1400, Jersey City, NJ 07310",
+            "year_founded": 2001,
+            "public_company": "Yes (Nasdaq: AVPT / SGX)",
+            "region": "North America",
+            "global_offices": "10+ global sites (US, EMEA, APAC)",
+            "industry": "Information Technology",
+            "revenue_range": "$100M – $500M",
+            "employee_range": "500+",
+            "website": "https://www.avepoint.com/",
+            "linkedin": "https://www.linkedin.com/company/avepoint",
+            "instagram": "https://www.instagram.com/avepoint/"
+        }
+    },
+    "contacts": {
+        "primary_contact": {
+            "name": "TJ Jiang",
+            "title": "Chief Executive Officer",
+            "email": "tj.jiang@avepoint.com",
+            "phone": "+1 201 793 1111",
+        },
+        "secondary_contact": {
+            "name": "IT / Infrastructure Lead",
+            "title": "Chief Information Officer",
+            "email": "info@avepoint.com",
+            "phone": "+1 201 793 1111",
+        }
+    },
+    "prospect_context": {
+        "financial_insights": [
+            "Revenue +24% YoY (2025 vs 2024) — strong SaaS-led growth momentum.",
+            "Net Income +348% YoY — dramatic profitability improvement and operating leverage.",
+            "ARR reached $390M in Q3 2025; targeting $1B ARR by 2029.",
+            "SaaS revenue growing at 38% — accelerating cloud-first business model.",
+            "EPS -66.7% YoY — dilution from 7.37M share public offering to fund growth initiatives."
+        ],
+
+
+        "growth_summary": [
+            "Acquired Ydentic to strengthen MSP automation and platform capabilities.",
+            "Dual-listed on Nasdaq and SGX to accelerate global expansion.",
+            "Launched AgentPulse — AI-driven security controls for AI agents.",
+            "Expanded Azure Data Protection globally via IAMCP partnership.",
+            "Priced a public offering of 7.37M shares to fund strategic growth.",
+            "Multi-cloud strategy advancing across enterprise and MSP-led growth channels."
+        ],
+        "why_prioritize_and_recommendations": [
+            {
+                "signal": "Multi-site operations with heavy multi-cloud workloads and security-sensitive data governance.",
+                "recommendation": "SASE",
+                "value": "Unifies secure access and network policy across sites and users — reduces security gaps during scale and acquisition complexity."
+            },
+            {
+                "signal": "Distributed global sites with bandwidth-intensive DevOps and analytics.",
+                "recommendation": "Colocation / Dedicated Fiber",
+                "value": "Improves reliability and throughput for cloud-adjacent workloads — supports expansion without introducing latency or resilience risk."
+            },
+            {
+                "signal": "Cloud-first SaaS stack with growing remote workforce and collaboration needs.",
+                "recommendation": "Cloud Voice with Microsoft Teams",
+                "value": "Standardizes voice and collaboration across distributed teams — simplifies operations while supporting growth and mobility, reduce complexity and cost."
+            }
+        ]
+
+    },
+    "tech_landscape": {
+        "tech_stack": {
+            "cloud_infrastructure": ["AWS", "Microsoft Azure", "Google Cloud Platform", "Amazon CloudFront", "Amazon Route 53"],
+            "network_and_cdn": ["CloudFlare", "Rackspace", "Verizon Wireless"],
+            "security": ["Microsoft 365 Defender", "Azure Sentinel", "Sophos", "Tenable Nessus", "SentinelOne", "Barracuda Email Security"],
+            "identity_and_access": ["Microsoft Active Directory", "Microsoft Entra", "OAuth", "OpenSSL"],
+            "crm_and_marketing": ["Salesforce CRM", "HubSpot", "Marketo", "LinkedIn Sales Navigator"],
+            "data_and_analytics": ["Google Analytics", "Tableau", "Power BI", "MongoDB", "MySQL", "Elasticsearch"],
+            "devops_and_development": ["Docker", "Kubernetes", "HashiCorp Terraform", "Git", "Ansible", "React", "Angular", "Node.js"],
+            "collaboration": ["Microsoft Teams", "SharePoint Online", "Outlook.com"]
+        }
+    },
+    "marketing_campaign": {
+        "notes": (
+            "Targeted Campaign: 'Securing AvePoint's Multi-Cloud Growth — SASE, Connectivity & Collaboration at Enterprise Scale'."
+        )
+    }
+}
+
+
+# ================================================================
+#  AVEPOINT SCOUTING REPORT RENDER FUNCTION
+# ================================================================
+def render_scouting_report_avepoint():
+    import time
+    with st.spinner("⚙️ Generating AvePoint scouting report..."):
+        time.sleep(6)
+    st.success("Showing scouting report for AvePoint")
+    render_sales_report(AVEPOINT_SCOUTING_REPORT)
+
+
+# ================================================================
+#  AVEPOINT SELLER PITCH
+# ================================================================
+def render_seller_pitch_avepoint():
+
+    pitch_html = """
+<div style="
+    background: #ffffff;
+    border-radius: 10px;
+    border: 1px solid #e5e7eb;
+    padding: 18px 20px;
+    font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 0.95rem;
+    line-height: 1.55;
+    text-align: left;
+">
+
+<p style="font-size:1.1rem; font-weight:700; margin-top:0;">
+Seller Pitch — AvePoint
+</p>
+
+<p style="font-weight:bold;">🏢 Company Snapshot</p>
+<p>
+AvePoint is a fast-scaling enterprise SaaS company delivering data protection, governance, and security across modern multi-cloud environments. 
+With active expansion initiatives, partner ecosystem growth, and AI-driven product innovation, the business is operating in an acceleration phase. 
+
+As distributed teams expand and workloads span AWS, Azure, and other cloud platforms, maintaining consistent security posture, resilient connectivity, 
+and seamless collaboration becomes increasingly critical. AvePoint’s next growth stage will depend on ensuring infrastructure scales as smoothly as the platform itself.
+</p>
+
+<p style="font-weight:bold; margin-top:18px;">🎤 Call Opening (SDR-Friendly)</p>
+<ul style="margin-left:18px; padding-left:18px;">
+  <li>"We’ve been following AvePoint’s expansion momentum and broader global footprint."</li>
+  <li>"As multi-cloud environments scale and teams become more distributed, security consistency and performance resilience typically become higher priorities."</li>
+  <li>"In similar SaaS growth phases, we often see secure access standardization and connectivity optimization become strategic initiatives."</li>
+  <li>"I’d love to share a few observations we’ve seen work well for enterprises operating across multiple clouds and sites."</li>
+</ul>
+
+<p style="font-weight:bold; margin-top:20px;">🚀 Where XYZ Global Networks Can Support (Top 3 Opportunities)</p>
+
+<p><b>1. Multi-site enterprise security modernization</b><br>
+→ <b>Recommendation:</b> SASE<br>
+→ <b>Why:</b> With distributed offices and cloud-based workloads, SASE helps standardize secure access and policy enforcement across users, applications, and sites — reducing risk while simplifying management as complexity grows.
+</p>
+
+<p><b>2. High-performance connectivity for distributed cloud operations</b><br>
+→ <b>Recommendation:</b> Colocation<br>
+→ <b>Why:</b> As workloads expand across multiple environments, resilient and scalable connectivity ensures performance consistency, uptime stability, and improved throughput for data-intensive operations.
+</p>
+
+<p><b>3. Collaboration and voice standardization for a distributed workforce</b><br>
+→ <b>Recommendation:</b> Cloud Voice with Microsoft Teams<br>
+→ <b>Why:</b> Deep alignment with the Microsoft ecosystem allows voice and collaboration to operate within a unified environment — simplifying operations and improving business continuity across teams.
+</p>
+
+<p style="font-weight:bold; margin-top:20px;">⚡ If the Client Hesitates</p>
+<ul style="margin-left:18px; padding-left:18px;">
+    <li>"In high-growth SaaS environments, infrastructure gaps usually appear during expansion or integration phases."</li>
+    <li>"We can benchmark AvePoint’s connectivity and secure access model against similar enterprise SaaS companies."</li>
+    <li>"Even a short discovery session can highlight opportunities to improve security consistency and operational resilience."</li>
+</ul>
+
+<p style="font-weight:bold; margin-top:20px;">🟢 If the Client Shows Interest</p>
+<ul style="margin-left:18px; padding-left:18px;">
+    <li>"The next step would be a focused 15-minute discussion around your current multi-cloud connectivity and secure access model."</li>
+    <li>"We can map where SASE, Colocation, or Cloud Voice could strengthen resilience across your distributed footprint."</li>
+    <li>"Would this week or next work better for you?"</li>
+</ul>
+
+</div>
+"""
+
+    st.markdown(pitch_html, unsafe_allow_html=True)
+
+
+# ================================================================
+#  AVEPOINT PERSONALIZED EMAIL
+# ================================================================
+def render_marketing_email_avepoint():
+
+    email_html = """
+<div style="
+    background:#f9f9f9;
+    padding:20px;
+    border-radius:10px;
+    border:1px solid #e0e0e0;
+    text-align:left;
+">
+
+<p style="text-align:left; font-weight:bold;">
+Subject: Supporting AvePoint’s Secure Multi-Cloud Expansion
+</p>
+
+<p style="text-align:left;">Hi TJ,</p>
+
+<p style="text-align:left;">Hope you're doing well.</p>
+
+<p style="text-align:left;">
+I'm <b>Sarah Jones</b>, and I lead enterprise initiatives at <b>XYZ Global Networks</b>.
+I’m reaching out as AvePoint continues to scale its enterprise SaaS footprint through expansion activity,
+partner ecosystem growth, and new AI-driven capabilities across data protection and governance.
+</p>
+
+<p style="text-align:left;">
+As organizations grow across multiple clouds and distributed teams, infrastructure pressure typically shows up in three places:
+<b>secure access consistency</b>, <b>reliable high-performance connectivity</b>, and <b>collaboration standardization</b>.
+This is where we support high-growth SaaS companies operating at enterprise scale.
+</p>
+
+<p style="text-align:left; font-weight:bold; margin-top:20px;">
+📌 Where We Can Support AvePoint’s Next Stage of Growth
+</p>
+
+<ul style="text-align:left; margin-left:18px; padding-left:18px; font-size:0.95rem;">
+  <li>
+    <b>SASE (Cybersecurity Services) — Secure access and policy consistency across sites and users</b><br>
+    → Strengthen security posture as environments expand, teams become more distributed, and operational complexity increases.
+  </li>
+
+  <li style="margin-top:8px;">
+    <b>Colocation (Cloud Connectivity) — Reliable performance for cloud-adjacent workloads and distributed operations</b><br>
+    → Improve resilience and throughput for the infrastructure supporting SaaS delivery and enterprise operations.
+  </li>
+
+  <li style="margin-top:8px;">
+    <b>Cloud Voice with Microsoft Teams (Voice &amp; Collaboration) — Standardized collaboration and voice for a distributed workforce</b><br>
+    → Simplify operations while improving employee experience and business continuity.
+  </li>
+</ul>
+
+<p style="text-align:left; font-weight:bold; margin-top:20px;">
+🤝 Would you be open to a brief discussion?
+</p>
+
+<p style="text-align:left;">
+If you're open to it, I’d love to share a short perspective on how similar SaaS organizations simplify
+security and connectivity as they scale across multi-cloud and distributed teams.
+</p>
+
+<p style="text-align:left;">
+We can also tailor a quick architecture conversation around AvePoint’s current footprint and priorities,
+and identify a few practical areas to improve <b>security consistency</b>, <b>network resilience</b>, and <b>operational simplicity</b>.
+</p>
+
+<p style="text-align:left; font-weight:bold; margin-top:20px;">
+⭐ Why XYZ Global Networks
+</p>
+
+<ul style="text-align:left; margin-left:18px; padding-left:18px; font-size:0.95rem;">
+<li>Enterprise-grade reliability and resilient connectivity for distributed operations</li>
+<li>Deep experience supporting multi-cloud environments and cloud-adjacent workloads</li>
+<li>Proven approach to secure access standardization and policy consistency</li>
+<li>Strong delivery model for multi-site enterprises and remote workforce enablement</li>
+</ul>
+
+<p style="text-align:left; margin-top:20px;">
+Best regards,<br>
+<b>Sarah Jones</b><br>
+Enterprise Solutions Manager<br>
+XYZ Global Networks<br>
+📞 (555) 123-4567<br>
+🌐 <a href="https://www.xyzglobalnetworks.com" target="_blank">xyzglobalnetworks.com</a>
+</p>
+
+</div>
+"""
+
+    st.markdown(email_html, unsafe_allow_html=True)
+
+
+
 # ================================================================
 #  Global CSS
 # ================================================================
@@ -370,12 +653,11 @@ h4.section-title {
 
 
 
-# ================================================================
-#  STATIC QA + FUZZY MATCHING
-# ================================================================
-
 STATIC_QA: Dict[str, str] = {}
 
+# ----------------------------------------------------------------
+# Q1 — High Priority Accounts (AvePoint replaces A-Mark)
+# ----------------------------------------------------------------
 STATIC_QA["give me key insights on high priority accounts which i should target today"] = (
 
     "<h3 style='margin-bottom:4px;'>🎯 Top Priority Accounts to Target Today</h3>"
@@ -384,26 +666,27 @@ STATIC_QA["give me key insights on high priority accounts which i should target 
 
     "<hr style='border: none; border-top: 1px solid #ccc; margin: 12px 0;'>"
 
-    "<h4>🚀 A-Mark Precious Metals — <i>Explosive Growth + High Security Exposure</i></h4>"
+    "<h4>🚀 AvePoint — <i>Security-Led Enterprise + Acquisition-Driven Momentum</i></h4>"
     "<p>"
-    "A-Mark is scaling at high velocity. Double-digit revenue growth, multiple acquisitions, and expanding multi-site trading operations "
-    "create a high-value moment. But their infrastructure and security posture lag behind their growth — creating urgent sales opportunity."
+    "AvePoint is scaling aggressively. 24% revenue growth, ARR at $390M, a dual Nasdaq/SGX listing, and the Ydentic acquisition "
+    "signal a company in full expansion mode. Their multi-cloud, multi-site infrastructure creates an immediate opening for SASE, "
+    "Colocation, and Cloud Voice — all high-fit, high-urgency plays."
     "</p>"
 
-    "<b>Why A-Mark is High Priority:</b>"
+    "<b>Why AvePoint is High Priority:</b>"
     "<ul>"
-    "<li>📈 +13% YoY revenue growth</li>"
-    "<li>🏢 Multiple acquisitions → rising network complexity</li>"
-    "<li>⚡ Multi-site trading needs <b>zero-downtime</b> connectivity</li>"
-    "<li>🔐 Medium cyber maturity → exposure risk</li>"
-    "<li>🚨 Strong FY25 intent signals tied to expansion</li>"
+    "<li>📈 +24% YoY revenue growth, ARR at $390M</li>"
+    "<li>🏢 Acquisition of Ydentic → rising network and MSP complexity</li>"
+    "<li>☁️ Heavy multi-cloud footprint (AWS, Azure, GCP) → SASE adjacency</li>"
+    "<li>🔐 Very High intent signals in Security Network + Cloud Services</li>"
+    "<li>💰 Very High spend tier — Enterprise ICT &amp; services opportunity</li>"
     "</ul>"
 
     "<b>SDR Talk Tracks:</b>"
     "<ul>"
-    "<li>“You're scaling faster than your infrastructure — let's strengthen it.”</li>"
-    "<li>“We can secure and stabilize multi-site trading operations.”</li>"
-    "<li>“Let’s fortify your security posture before further expansion.”</li>"
+    "<li>\"You're scaling faster than your infrastructure — let's secure and modernize it.\"</li>"
+    "<li>\"Your multi-cloud footprint and acquisition pace are ideal for SASE consolidation.\"</li>"
+    "<li>\"Let's protect your $390M ARR base with enterprise-grade connectivity and security.\"</li>"
     "</ul>"
 
     "<hr style='border: none; border-top: 1px solid #ccc; margin: 18px 0;'>"
@@ -417,7 +700,7 @@ STATIC_QA["give me key insights on high priority accounts which i should target 
     "<b>Why VeriSign is High Priority:</b>"
     "<ul>"
     "<li>🛡 Mission-critical DNS + security infrastructure</li>"
-    "<li>☁️ Advanced multi-cloud & IAM stack</li>"
+    "<li>☁️ Advanced multi-cloud &amp; IAM stack</li>"
     "<li>💵 Strong financial strength</li>"
     "<li>⚠️ Zero tolerance for latency or outages</li>"
     "<li>🏆 High maturity → perfect for premium XYZ Global Networks solutions</li>"
@@ -425,9 +708,9 @@ STATIC_QA["give me key insights on high priority accounts which i should target 
 
     "<b>SDR Talk Tracks:</b>"
     "<ul>"
-    "<li>“We support companies where milliseconds matter — like yours.”</li>"
-    "<li>“Let’s optimize global network paths for DNS & identity.”</li>"
-    "<li>“We can harden resilience across your multi-cloud backbone.”</li>"
+    "<li>\"We support companies where milliseconds matter — like yours.\"</li>"
+    "<li>\"Let's optimize global network paths for DNS &amp; identity.\"</li>"
+    "<li>\"We can harden resilience across your multi-cloud backbone.\"</li>"
     "</ul>"
 
     "<hr style='border: none; border-top: 1px solid #ccc; margin: 18px 0;'>"
@@ -443,15 +726,15 @@ STATIC_QA["give me key insights on high priority accounts which i should target 
     "<li>🌍 Large global enterprise with complex retail footprint</li>"
     "<li>🔄 Active divestiture + optimization initiatives</li>"
     "<li>🤖 High maturity across cloud, AI, security, ERP/CRM</li>"
-    "<li>🚚 Modernizing supply chain & store operations</li>"
+    "<li>🚚 Modernizing supply chain &amp; store operations</li>"
     "<li>📊 Strong intent signals during restructuring</li>"
     "</ul>"
 
     "<b>SDR Talk Tracks:</b>"
     "<ul>"
-    "<li>“This transformation window is the perfect time to modernize connectivity.”</li>"
-    "<li>“Let’s simplify and secure SD-WAN across your global retail environment.”</li>"
-    "<li>“We help unify store connectivity, supply-chain visibility, and managed security.”</li>"
+    "<li>\"This transformation window is the perfect time to modernize connectivity.\"</li>"
+    "<li>\"Let's simplify and secure SD-WAN across your global retail environment.\"</li>"
+    "<li>\"We help unify store connectivity, supply-chain visibility, and managed security.\"</li>"
     "</ul>"
 
     "<hr style='border: none; border-top: 1px solid #ccc; margin: 18px 0;'>"
@@ -459,75 +742,106 @@ STATIC_QA["give me key insights on high priority accounts which i should target 
     "<p style='font-size:16px; font-weight:600; color:#111; margin-top: 2px;'>"
     "⭐ These three accounts should be your top focus today — each is in a strategic, high-impact transformation phase where XYZ Global Networks can deliver immediate enterprise value."
     "</p>"
-
-    "</div>"
 )
 
 
-STATIC_QA["give me a deep dive on a-mark precious metals"] = (
-    "<h3 style='margin-bottom:6px;'>Deep-Dive on A-Mark Precious Metals</h3>"
-    "<p style='margin-top:0;'>A-Mark is classified as a <b>High-Priority Account</b> due to rapid global expansion, "
-    "aggressive acquisitions, strong revenue momentum, and complex multi-site operations that require modernization, "
-    "resilience, and enhanced cybersecurity.</p>"
+# ----------------------------------------------------------------
+# Q2 — Deep Dive on AvePoint (replaces old A-Mark deep dive key)
+# ----------------------------------------------------------------
+STATIC_QA["give me a deep dive on avepoint"] = (
+
+    "<h3 style='margin-bottom:6px;'>Deep-Dive on AvePoint</h3>"
+    "<p style='margin-top:0;'>AvePoint is classified as a <b>High-Priority Account (ACC001)</b> due to aggressive SaaS growth, "
+    "acquisition-driven expansion, very high intent signals in security and cloud, and a large enterprise multi-cloud footprint "
+    "that maps directly to XYZ Global Networks' SASE, Colocation, and Cloud Voice offerings.</p>"
+
     "<hr style='border:none; border-top:1px solid #ccc; margin:12px 0;'>"
+
     "<h4>🏢 Company Overview</h4>"
-    "<p>A-Mark Precious Metals is a fully integrated precious metals platform offering gold, silver, platinum, and bullion "
-    "products to retail, wholesale, and institutional clients globally.</p>"
+    "<p>AvePoint provides a unified data protection platform for enterprises, focusing on security, governance, and resilience "
+    "in the AI-driven workplace. They help organizations manage data across the full digital lifecycle, with a growing MSP "
+    "channel and AI-native product portfolio.</p>"
     "<ul>"
-        "<li><b>Founded:</b> 1965</li>"
-        "<li><b>Headquarters:</b> 2121 Rosecrans Avenue, Suite 6300, El Segundo, CA 90245, USA</li>"
-        "<li><b>Employees:</b> 50–150</li>"
-        "<li><b>Revenue:</b> $500M+</li>"
-        "<li><b>Industry:</b> Finance & Insurance Services (NAICS 551111)</li>"
-        "<li><b>Website:</b> https://www.amark.com/</li>"
-        "<li><b>Corporate Line:</b> +1 310-319-0200</li>"
-        "<li><b>LinkedIn:</b> https://www.linkedin.com/company/a-mark-precious-metals</li>"
+    "<li><b>Founded:</b> 2001</li>"
+    "<li><b>Headquarters:</b> 525 Washington Blvd, Suite 1400, Jersey City, NJ 07310</li>"
+    "<li><b>Employees:</b> 500+</li>"
+    "<li><b>Revenue:</b> $100M – $500M</li>"
+    "<li><b>Industry:</b> Information Technology</li>"
+    "<li><b>Listed:</b> Nasdaq (AVPT) + SGX (dual-listed)</li>"
+    "<li><b>Website:</b> https://www.avepoint.com/</li>"
+    "<li><b>Corporate Line:</b> +1 201 793 1111</li>"
+    "<li><b>LinkedIn:</b> https://www.linkedin.com/company/avepoint</li>"
     "</ul>"
+
     "<hr style='border:none; border-top:1px solid #ccc; margin:12px 0;'>"
-    "<h4>🌍 Global Operating Footprint</h4>"
-    "<p>A-Mark operates across seven major hubs supporting trading, fulfillment, auctions, and collectibles logistics:</p>"
+
+    "<h4>🌍 Operating Footprint</h4>"
+    "<p>AvePoint operates across multiple US locations supporting enterprise SaaS delivery and MSP channels:</p>"
     "<ul>"
-        "<li>Dallas, TX</li>"
-        "<li>Las Vegas, NV</li>"
-        "<li>Boston, MA</li>"
-        "<li>Winchester, VA</li>"
-        "<li>Vienna, Austria</li>"
-        "<li>London, UK</li>"
-        "<li>Hong Kong</li>"
+    "<li>Jersey City, NJ (HQ)</li>"
+    "<li>Chicago, IL</li>"
+    "<li>Richmond, VA</li>"
+    "<li>Arlington, VA</li>"
     "</ul>"
+
     "<hr style='border:none; border-top:1px solid #ccc; margin:12px 0;'>"
+
     "<h4>📊 Financial Interpretation</h4>"
-    "<p>Strong revenue growth but severe margin pressure — signaling scaling challenges, integration costs, "
-    "and operational strain across multi-site trading activity.</p>"
+    "<p>AvePoint is in a high-growth SaaS expansion phase — accelerating revenue, improving profitability, "
+    "and building toward $1B ARR by 2029.</p>"
     "<ul>"
-        "<li><b>Revenue Growth:</b> +13.19% (strong expansion)</li>"
-        "<li><b>Net Income:</b> −74.72% (profit compression)</li>"
-        "<li><b>Operating Cash Flow:</b> +149.99% (high liquidity)</li>"
-        "<li><b>CapEx:</b> +47.09% (investment in growth & infrastructure)</li>"
-        "<li><b>EPS:</b> −75.42% (margin & cost pressure)</li>"
+    "<li><b>Revenue Growth:</b> +24% YoY (2025 vs 2024) — strong SaaS-led momentum</li>"
+    "<li><b>Net Income Change:</b> +348% YoY — significant profitability improvement</li>"
+    "<li><b>ARR:</b> $390M in Q3 2025, targeting $1B by 2029</li>"
+    "<li><b>SaaS Growth:</b> +38% — accelerating cloud-first model</li>"
+    "<li><b>EPS:</b> -66.7% — dilution from 7.37M share offering to fund strategic growth</li>"
     "</ul>"
+
     "<hr style='border:none; border-top:1px solid #ccc; margin:12px 0;'>"
-    "<h4>🚀 Growth Signals & Recent Activity</h4>"
-    "<p>A-Mark is in an acceleration phase driven by acquisitions, expansion into new markets, and operational digitization.</p>"
+
+    "<h4>🚀 Growth Signals &amp; Recent Activity</h4>"
+    "<p>AvePoint is in a full acceleration phase driven by acquisitions, AI product launches, and global market expansion.</p>"
     "<ul>"
-        "<li><b>Acquisitions (Feb–Mar 2025):</b><br>"
-        "Stack’s Bowers, Spectrum Group, Pinehurst Coin Exchange — strengthening the collectibles portfolio.</li>"
-        "<li><b>Business Expansion:</b><br>"
-        "Entered the ~$92M collectible coin market and increased digital trading & auction activity.</li>"
-        "<li><b>Financial Indicators:</b><br>"
-        "Revenue momentum remains high, while EPS declines reflect integration and leverage costs.</li>"
+    "<li><b>Acquisition:</b> Acquired Ydentic to strengthen MSP automation and platform capabilities.</li>"
+    "<li><b>Dual Listing:</b> Listed on SGX alongside Nasdaq to accelerate global expansion.</li>"
+    "<li><b>New Product:</b> Launched AgentPulse — AI-driven security controls for AI agents.</li>"
+    "<li><b>Partnership:</b> Expanded Azure Data Protection globally via IAMCP partnership.</li>"
+    "<li><b>Capital Raise:</b> Priced a public offering of 7.37M shares to support strategic growth.</li>"
+    "<li><b>Market Focus:</b> Advancing multi-cloud strategy across enterprise and MSP-led channels.</li>"
+    "</ul>"
+
+    "<hr style='border:none; border-top:1px solid #ccc; margin:12px 0;'>"
+
+    "<h4>🎯 Intent Signals</h4>"
+    "<ul>"
+    "<li><b>Security Network (Score: 85):</b> zero trust architecture, SIEM platforms, endpoint detection, cloud security posture, threat analytics</li>"
+    "<li><b>Cloud Services (Score: 80):</b> multi-cloud optimisation, cloud scalability, CDN performance, workload distribution</li>"
+    "<li><b>Digital Infrastructure (Score: 78):</b> SD-WAN optimisation, global backbone connectivity, carrier benchmarking, network resilience</li>"
+    "<li><b>Competitor Products Researched:</b> AWS, Microsoft Azure, Cloudflare, Salesforce</li>"
+    "</ul>"
+
+    "<hr style='border:none; border-top:1px solid #ccc; margin:12px 0;'>"
+
+    "<h4>💡 Top Recommendations</h4>"
+    "<ul>"
+    "<li><b>1. SASE (Fit: 0.9)</b> — Enterprise security modernization aligned to strong network intent and multi-site footprint.</li>"
+    "<li><b>2. Colocation (Fit: 0.85)</b> — Infrastructure scaling requires centralized high-performance connectivity.</li>"
+    "<li><b>3. Cloud Voice with Microsoft Teams (Fit: 0.80)</b> — Cloud-native collaboration consolidation across Microsoft ecosystem.</li>"
     "</ul>"
 
     "<hr style='border:none; border-top:1px solid #ccc; margin:14px 0;'>"
+
     "<h4>🏅 Lead Priority Conclusion</h4>"
     "<p style='font-size:16px;'>"
-    "<b>A-Mark Precious Metals is a High-Priority account</b> due to its rapid acquisitions, global expansion, "
-    "strong cash flows, and increased operational complexity — all requiring enhanced connectivity, security, and modernization."
+    "<b>AvePoint is a High-Priority account (ACC001)</b> — security-led enterprise with acquisition-driven momentum. "
+    "Engage immediately for SASE + security displacement, Colocation for infrastructure scaling, and Cloud Voice for collaboration consolidation."
     "</p>"
-    "</div>"
 )
 
 
+# ----------------------------------------------------------------
+# Q3 — Financially Growing Companies 
+# ----------------------------------------------------------------
 STATIC_QA["show companies that are financially growing"] = (
 
     "<h3 style='margin-bottom:6px;'>📈 Companies That Are Financially Growing</h3>"
@@ -538,8 +852,8 @@ STATIC_QA["show companies that are financially growing"] = (
 
     "<h4>🏗 Terex Corporation — Strong Short-Term Growth Momentum</h4>"
     "<ul>"
-        "<li><b>Quarterly revenue more than doubled</b>, signaling high demand and strong operational execution.</li>"
-        "<li>Annual revenue stable with mild softening — short-term acceleration remains strong.</li>"
+    "<li><b>Quarterly revenue more than doubled</b>, signaling high demand and strong operational execution.</li>"
+    "<li>Annual revenue stable with mild softening — short-term acceleration remains strong.</li>"
     "</ul>"
     "<p><i>Interpretation:</i> Terex shows <b>robust near-term recovery</b> fueled by construction and industrial demand.</p>"
 
@@ -547,39 +861,39 @@ STATIC_QA["show companies that are financially growing"] = (
 
     "<h4>🧬 Incyte Pharmaceuticals — High Revenue Expansion</h4>"
     "<ul>"
-        "<li><b>YoY revenue increased sharply</b>, showing strong product adoption.</li>"
-        "<li><b>Quarter-over-quarter revenue more than doubled</b>, likely driven by new oncology/immunology growth.</li>"
+    "<li><b>YoY revenue increased sharply</b>, showing strong product adoption.</li>"
+    "<li><b>Quarter-over-quarter revenue more than doubled</b>, likely driven by new oncology/immunology growth.</li>"
     "</ul>"
     "<p><i>Interpretation:</i> Incyte is on a <b>high-growth trajectory</b> from pipeline expansion and strong sales momentum.</p>"
 
     "<hr style='border:none; border-top:1px solid #ccc; margin:12px 0;'>"
 
-    "<h4>💰 A-Mark Precious Metals — Strong Revenue & Exceptional Cash Flow</h4>"
+    "<h4>💻 AvePoint — Strong SaaS Revenue Growth &amp; Profitability Surge</h4>"
     "<ul>"
-        "<li><b>Revenue +13.19% YoY</b> — steady top-line expansion.</li>"
-        "<li><b>Free cash flow +163.98%</b> — very strong liquidity position.</li>"
-        "<li><b>Operating cash flow nearly tripled</b> — operational performance improving sharply.</li>"
-        "<li><b>Gross profit +21.73%</b> — stronger pricing & volume.</li>"
+    "<li><b>Revenue +24% YoY</b> — accelerating SaaS-led expansion.</li>"
+    "<li><b>Net Income +348% YoY</b> — dramatic profitability improvement.</li>"
+    "<li><b>ARR at $390M</b> — targeting $1B ARR by 2029.</li>"
+    "<li><b>SaaS Growth +38%</b> — cloud-first model accelerating strongly.</li>"
     "</ul>"
-    "<p><i>Interpretation:</i> A-Mark shows <b>excellent liquidity and revenue momentum</b>, despite margin pressures.</p>"
+    "<p><i>Interpretation:</i> AvePoint shows <b>exceptional SaaS growth momentum</b> with improving profitability and a clear path to $1B ARR.</p>"
 
     "<hr style='border:none; border-top:1px solid #ccc; margin:12px 0;'>"
 
     "<h4>🚜 Caterpillar Inc. — Strong Quarterly Sales Performance</h4>"
     "<ul>"
-        "<li><b>Quarterly revenue +16.27%</b>, reflecting strong demand and backlog conversion.</li>"
-        "<li>Annual revenue dipped slightly — long-term trend requires monitoring.</li>"
+    "<li><b>Quarterly revenue +16.27%</b>, reflecting strong demand and backlog conversion.</li>"
+    "<li>Annual revenue dipped slightly — long-term trend requires monitoring.</li>"
     "</ul>"
     "<p><i>Interpretation:</i> Caterpillar is in a <b>short-term upswing</b> driven by industrial demand cycles.</p>"
 
     "<hr style='border:none; border-top:1px solid #ccc; margin:12px 0;'>"
 
-    "<h4>🏭 Air Products — Exceptional Profitability & Efficiency Gains</h4>"
+    "<h4>🏭 Air Products — Exceptional Profitability &amp; Efficiency Gains</h4>"
     "<ul>"
-        "<li><b>Net income +66% YoY</b> — large profitability boost.</li>"
-        "<li><b>EPS +66.19%</b> — strong earnings leverage.</li>"
-        "<li><b>Operating income +79%</b> — major cost efficiency improvements.</li>"
-        "<li><b>Operating cash flow +75%</b> — excellent operational strength.</li>"
+    "<li><b>Net income +66% YoY</b> — large profitability boost.</li>"
+    "<li><b>EPS +66.19%</b> — strong earnings leverage.</li>"
+    "<li><b>Operating income +79%</b> — major cost efficiency improvements.</li>"
+    "<li><b>Operating cash flow +75%</b> — excellent operational strength.</li>"
     "</ul>"
     "<p><i>Interpretation:</i> Air Products displays <b>top-tier financial performance</b> with strong operational discipline.</p>"
 
@@ -587,9 +901,9 @@ STATIC_QA["show companies that are financially growing"] = (
 
     "<h4>🌐 VeriSign — Stable Long-Term Growth + Sharp Quarterly Spike</h4>"
     "<ul>"
-        "<li><b>Annual revenue +4.31% YoY</b> — consistent long-term growth.</li>"
-        "<li><b>Quarterly revenue doubled</b> from Q1 → Q2 2025.</li>"
-        "<li><b>Gross profit +5.41%</b> — healthy recurring revenue structure.</li>"
+    "<li><b>Annual revenue +4.31% YoY</b> — consistent long-term growth.</li>"
+    "<li><b>Quarterly revenue doubled</b> from Q1 → Q2 2025.</li>"
+    "<li><b>Gross profit +5.41%</b> — healthy recurring revenue structure.</li>"
     "</ul>"
     "<p><i>Interpretation:</i> VeriSign remains a <b>stable compounder</b> with subscription-based recurring revenue growth.</p>"
 
@@ -598,16 +912,16 @@ STATIC_QA["show companies that are financially growing"] = (
     "<h4>⭐ Summary</h4>"
     "<p>The companies demonstrating the strongest financial growth are:</p>"
     "<ul>"
-        "<li><b>Terex Corporation</b> — short-term acceleration</li>"
-        "<li><b>Incyte Pharmaceuticals</b> — powerful YoY + QoQ expansion</li>"
-        "<li><b>A-Mark Precious Metals</b> — exceptional cash flow & revenue gains</li>"
-        "<li><b>Caterpillar Inc.</b> — strong quarterly performance</li>"
-        "<li><b>Air Products</b> — leading profitability growth</li>"
-        "<li><b>VeriSign</b> — steady long-term growth + recent spike</li>"
+    "<li><b>Terex Corporation</b> — short-term acceleration</li>"
+    "<li><b>Incyte Pharmaceuticals</b> — powerful YoY + QoQ expansion</li>"
+    "<li><b>AvePoint</b> — exceptional SaaS growth &amp; profitability surge</li>"
+    "<li><b>Caterpillar Inc.</b> — strong quarterly performance</li>"
+    "<li><b>Air Products</b> — leading profitability growth</li>"
+    "<li><b>VeriSign</b> — steady long-term growth + recent spike</li>"
     "</ul>"
-
-    "</div>"
 )
+
+
 
 
 def fuzzy_match(query: str, choices: Dict[str, str], threshold: float = 0.55):
@@ -1178,13 +1492,13 @@ def insight_studio_page():
     # Defaults if sidebar hasn't set them yet
     if "insight_scope" not in st.session_state:
         st.session_state.insight_scope = "Content Generation"
-    if "company_input_insight" not in st.session_state:
-        st.session_state.company_input_insight =  "A-Mark Precious Metals"          # no default company
     if "insight_content_type" not in st.session_state:
         st.session_state.insight_content_type = "Scouting Report"
 
+    st.session_state.setdefault("company_input_insight", "AvePoint")
+
     scope = st.session_state.insight_scope
-    company_name = (st.session_state.company_input_insight or "").strip()
+    company_name = st.session_state.get("company_input_insight") or "AvePoint"
     content_type = st.session_state.insight_content_type
 
     # =====================================================================
@@ -1241,6 +1555,48 @@ def insight_studio_page():
                 placeholder="companies with 500+ employees",
             )
             send = st.form_submit_button("Send")
+
+        # --- QUICK QUESTION CHIPS ---
+        chip_questions = [
+        ("🎯 Top Priority Accounts", "Give me key insights on high priority accounts which I should target today"),
+        ("🏢 AvePoint Deep Dive",    "Give me a deep dive on avepoint"),
+        ("📈 Financial Growing Companies", "Show companies that are financially growing")
+        ]
+
+        st.markdown("<div class='chip-row'>", unsafe_allow_html=True)
+        # chip_cols = st.columns(len(chip_questions))
+        chip_cols = st.columns([1.2, 1, 1.3, 4])  # last col is empty spacer
+        for ci, (label, full_query) in enumerate(chip_questions):
+            with chip_cols[ci]:
+                if st.button(label, key=f"chip_{ci}"):
+                    st.session_state.chat_history.append({"role": "user", "content": full_query})
+                    st.session_state["pending_chip_query"] = full_query
+                    st.rerun()
+        st.markdown("</div>", unsafe_allow_html=True)
+
+
+        # --- HANDLE CHIP QUERY WITH SPINNER ---
+        if st.session_state.get("pending_chip_query"):
+            pending = st.session_state.pop("pending_chip_query")
+            log_placeholder = st.empty()
+
+            def show_log(msg):
+                log_placeholder.markdown(f"<div class='log-box'>{msg}</div>", unsafe_allow_html=True)
+
+            show_log("📦 Routing query...")
+            time.sleep(0.4)
+            show_log("🔍 Running semantic search...")
+            time.sleep(0.4)
+            show_log("🧠 Processing...")
+            time.sleep(0.4)
+            show_log("📄 Preparing final answer...")
+            time.sleep(0.4)
+            log_placeholder.empty()
+
+            matched_key = fuzzy_match(pending.lower(), STATIC_QA)
+            answer_html = STATIC_QA[matched_key] if matched_key else "<b>Answer:</b><br>No static answer found."
+            st.session_state.chat_history.append({"role": "assistant", "content": answer_html})
+            st.rerun()
 
         if send and user_query.strip():
             # 1) append user message
@@ -1326,6 +1682,12 @@ def insight_studio_page():
             st.success("Showing scouting report for A-Mark Precious Metals")
             render_sales_report(A_MARK_SCOUTING_REPORT)
 
+        elif company in ["avepoint"]:
+            with st.spinner("⚙️ Generating AvePoint scouting report..."):
+                time.sleep(6)
+            st.success("Showing scouting report for AvePoint")
+            render_sales_report(AVEPOINT_SCOUTING_REPORT)
+
         else:
             st.warning(
                 f"No scouting report template is available yet for **{company_name}**."
@@ -1353,6 +1715,12 @@ def insight_studio_page():
             st.success("Showing Seller Pitch for Wolfspeed")
             render_seller_pitch_wolfspeed()
 
+        elif company in ["avepoint"]:
+            with st.spinner("⚙️ Building seller pitch for AvePoint..."):
+                time.sleep(6)
+            st.success("Showing Seller Pitch for AvePoint")
+            render_seller_pitch_avepoint()
+
         else:
             st.warning("Seller pitch is not available for this company.")
 
@@ -1362,17 +1730,24 @@ def insight_studio_page():
 
     # --- Marketing Campaign / Marketing Email ---
     if content_type == "Personalized Email":
+        
         if company_name.lower() == "wolfspeed":
             with st.spinner("⚙️ Generating personalized email for Wolfspeed..."):
                 time.sleep(6)
             st.success(f"Showing marketing email for Wolfspeed")
             render_marketing_email_wolfspeed()
         
-        elif company_name.lower() in ["a-mark", "amark", "a-mark precious metals", "a mark", "a mark precious metals"]:  # Changed if to elif
+        elif company_name.lower() in ["a-mark", "amark", "a-mark precious metals", "a mark", "a mark precious metals"]:  
             with st.spinner("⚙️ Generating personalized email for A-Mark Precious Metals..."):
                 time.sleep(6)
             st.success("Showing marketing email for A-Mark Precious Metals")
             render_marketing_email_amark()
+
+        elif company_name.lower() in ["avepoint"]:  
+            with st.spinner("⚙️ Generating personalized email for AvePoint..."):
+                time.sleep(6)
+            st.success("Showing marketing email for AvePoint")
+            render_marketing_email_avepoint()
         
         else:
             st.warning("No marketing email available for this company.")

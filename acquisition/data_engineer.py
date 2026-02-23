@@ -10,6 +10,15 @@ import datetime
 import re
 import os
 
+
+# STATE INITIALIZATION
+st.session_state.setdefault("run_process", False)
+st.session_state.setdefault("stop_process", False)
+st.session_state.setdefault("step_done", {})
+st.session_state.setdefault("log_html", {})
+st.session_state.setdefault("current_step", 0)
+st.session_state.setdefault("task_running", {})
+
 # --- IMPORTS FOR PAGE RENDERING ---
 try:
     from lead_scoring import lead_scoring_page
@@ -19,13 +28,6 @@ except ImportError:
         st.warning("🚨 Lead Scoring page module not found. Displaying placeholder.")
         st.markdown("</div>", unsafe_allow_html=True)
 
-try:
-    from product_reco import product_recommendation_page
-except ImportError:
-    def product_recommendation_page(df):
-        st.markdown("<div class='main-panel'>", unsafe_allow_html=True)
-        st.warning("🚨 Product Recommendation page module not found. Displaying placeholder.")
-        st.markdown("</div>", unsafe_allow_html=True)
 
 try:
     from insight_studio import insight_studio_page
@@ -46,50 +48,38 @@ def status_dot(color: str = "#ccc", size: int = 12) -> str:
 
 # --- VIEW SWITCHER CALLBACKS ---
 def _switch_to_insights():
-    """Callback to set the main view to Insight Studio."""
     st.session_state.last_selected_company = st.session_state.get("company_input")
     st.session_state.main_view = "insight"
 
 
 def _switch_to_lead():
-    """Callback to set the main view back to Lead Management."""
     st.session_state.last_selected_company = st.session_state.get("company_input")
     st.session_state.main_view = "lead"
 
 
 def _clear_right_side():
-    """Callback to reset the main panel when the company changes."""
-
     keep = {
-    # Core app
-    "company_input",
-    "last_selected_company",
-    "placeholders",
-    "scope",
-    "logged_in",
-    "role",
-    "username",
-    "uploaded_df",
-    "main_view",
+        "company_input",
+        "last_selected_company",
+        "placeholders",
+        "scope",
+        "logged_in",
+        "role",
+        "username",
+        "uploaded_df",
+        "main_view",
+        "insight_scope",
+        "insight_content_type",
+        "lead_placeholders",
+        "lead_cached",
+        "lead_run_id",
+        "lead_stop_requested",
+        "lead_ctx_text",
+        "lead_list_name",
+        "lead_prioritization_df",
+        "pipeline_company",
+    }
 
-    # Insight Studio
-    "insight_scope",
-    "insight_content_type",
-
-    # Lead Scoring (VERY IMPORTANT)
-    "lead_placeholders",
-    "lead_cached",
-    "lead_run_id",
-    "lead_stop_requested",
-    "lead_ctx_text",
-    "lead_list_name",
-    "lead_prioritization_df",
-
-    # Pipeline continuity
-    "pipeline_company",
-}
-
-    # st.session_state["last_selected_company"] = st.session_state.get("company_input")
     if "company_input" in st.session_state and st.session_state.company_input:
         st.session_state["last_selected_company"] = st.session_state.company_input
 
@@ -101,23 +91,24 @@ def _clear_right_side():
                 pass
     st.session_state["placeholders"] = {}
     st.session_state["stop_requested"] = False
-    # reset run flags
     st.session_state["pipeline_has_run"] = False
     st.session_state["detailed_logs_list"] = []
 
 
-# --- NEW FUNCTION FOR INSIGHT STUDIO SIDEBAR INPUTS ---
+# --- INSIGHT STUDIO SIDEBAR INPUTS ---
 def _handle_insight_generation():
-    """Sets a flag to tell insight_studio.py to generate content."""
     st.session_state.run_insight_generation = True
 
 
 def _reset_company_on_content_change():
-    st.session_state.company_input_insight = ""
+    st.session_state.company_input_insight = (
+        st.session_state.get("company_input")
+        or st.session_state.get("last_selected_company")
+        or "AvePoint"
+    )
 
 
 def _render_insight_sidebar_inputs():
-    """Renders the dynamic inputs for the Insight Studio view in the sidebar."""
     st.markdown("<br>", unsafe_allow_html=True)
     st.markdown("<div class='scope-title'>Insight Scope</div>", unsafe_allow_html=True)
 
@@ -133,15 +124,17 @@ def _render_insight_sidebar_inputs():
 
     st.session_state.pipeline_ran = True
     if st.session_state.insight_scope == "Sales Intelligence Report":
-        company_name_for_insight = (
-            st.session_state.get("company_input")
-            or st.session_state.get("last_selected_company")
-            or ""
-        )
+        if not st.session_state.get("company_input_insight"):
+            st.session_state["company_input_insight"] = (
+                st.session_state.get("company_input")
+                or st.session_state.get("last_selected_company")
+                or "AvePoint"
+            )
+
         st.text_input(
             "Target Company",
             key="company_input_insight",
-            value=company_name_for_insight,
+            value = "AvePoint",
             disabled=False,
             help="To change the company, switch back to Lead Management."
         )
@@ -173,7 +166,7 @@ def _render_insight_sidebar_inputs():
     )
 
 
-# --- FULL CSS (unchanged from your file) ---
+    # --- FULL CSS ---
 _CSS = """
 <style>
 
@@ -187,7 +180,7 @@ _CSS = """
     padding: 1.5rem 1.5rem 2rem 1.5rem !important;
 }
 
-/* main-panel wrapper (will contain the large white area) */
+/* main-panel wrapper */
 .main-panel {
     background: #ffffff;
     border-radius: 12px;
@@ -196,7 +189,7 @@ _CSS = """
     border: 1px solid transparent;
 }
 
-/* description paragraph inside main-panel (left aligned) */
+/* description paragraph inside main-panel */
 .main-panel .panel-desc {
     text-align: left;
     color: #555;
@@ -206,14 +199,14 @@ _CSS = """
     margin-bottom: 14px;
 }
 
-/* Highlighted (expanded) task card gets subtle grey */
+/* Highlighted task card */
 .task-card.highlighted {
     background: #f6f7f9 !important;
     border: 1px solid #e6e7ea !important;
     box-shadow: 0 2px 8px rgba(0,0,0,0.03);
 }
 
-/* Default task card remains white with soft border */
+/* Default task card */
 .task-card {
     background:#ffffff;
     border:1px solid #eef0f2;
@@ -228,17 +221,15 @@ _CSS = """
 }
 
 /* ================================
-   Sidebar styling + header + user
+   Sidebar styling
    ================================ */
 
-/* Sidebar container */
 [data-testid="stSidebar"] {
     border-right: 1px solid #e6e6e6;
     width: 400px !important;
     min-width: 400px !important;
 }
 
-/* Full-height inner wrapper with light grey gradient */
 [data-testid="stSidebar"] > div:first-child {
     display: flex;
     flex-direction: column;
@@ -257,7 +248,6 @@ _CSS = """
     flex-grow: 1;
 }
 
-/* Accenture logo + stacked title */
 .sidebar-header {
     display: flex;
     align-items: center;
@@ -290,7 +280,6 @@ _CSS = """
     line-height: 1.2;
 }
 
-/* tweak font size of stacked title */
 .sidebar-title-block span {
     font-size: 1.5rem !important;
     font-weight: 800 !important;
@@ -299,7 +288,6 @@ _CSS = """
     letter-spacing: -0.3px;
 }
 
-/* Small purple section label */
 .scope-title {
     color: #6b00b8;
     font-weight: 700;
@@ -307,7 +295,6 @@ _CSS = """
     letter-spacing: 0.01em;
 }
 
-/* Logged-in user inline row with avatar icon */
 .sidebar-user-inline {
     display: flex;
     align-items: center;
@@ -349,7 +336,7 @@ _CSS = """
     margin-top: 2px;
 }
 
-/* ========= LOGOUT BUTTON (CENTER) ========= */
+/* ========= LOGOUT BUTTON ========= */
 .sidebar-logout-wrapper {
     width: 100%;
     display: flex;
@@ -397,7 +384,6 @@ div[aria-haspopup="listbox"] span {
     font-size: 0.95rem !important;
 }
 
-/* Text input styling */
 div[data-testid="stTextInput"] input {
     background-color: #ffffff !important;
     border: 1px solid #dcdcdc !important;
@@ -406,7 +392,6 @@ div[data-testid="stTextInput"] input {
     color: #222 !important;
 }
 
-/* Purple Select Scope label */
 [data-testid="stSidebar"] div[data-testid="stRadio"] > label {
     color: #6b00b8 !important;
     font-weight: 700 !important;
@@ -426,7 +411,6 @@ div[data-testid="stTextInput"] input {
     margin-top: 6px;
 }
 
-/* white background + same width for all three options */
 [data-testid="stSidebar"] [data-testid="stRadio"] [role="radiogroup"] > label {
     display: flex !important;
     align-items: center;
@@ -516,7 +500,6 @@ div[data-testid="stTextInput"] input {
     text-decoration: underline;
 }
 
-/* header/title */
 .header-title {
     color:#2e2e2e;
     font-weight:800;
@@ -524,7 +507,6 @@ div[data-testid="stTextInput"] input {
     font-size:28px;
 }
 
-/* Progress bar inline */
 .progress-inline {
     width: 100%;
     height: 8px;
@@ -535,7 +517,6 @@ div[data-testid="stTextInput"] input {
     background: #6b00b8;
 }
 
-/* Minor typography */
 h3 {
     font-weight:700;
     margin:0 0 8px 0;
@@ -606,6 +587,7 @@ div[data-testid="stFileUploader"] button:hover {
 }
 .agent-log-line.success {
     color: #1b7f3b;
+    font-weight: 700;
 }
 .agent-log-line.meta {
     color: #777;
@@ -614,6 +596,18 @@ div[data-testid="stFileUploader"] button:hover {
 .agent-log-empty {
     color: #999;
     font-style: italic;
+}
+
+.agent-log-line.source-tag {
+    display: inline-block;
+    background: #ede9fe;
+    border: 1px solid #c4b5fd;
+    border-radius: 4px;
+    padding: 1px 7px;
+    font-size: 11px;
+    color: #6b21a8;
+    margin-left: 6px;
+    font-weight: 600;
 }
 
 .main-title {
@@ -626,27 +620,22 @@ div[data-testid="stFileUploader"] button:hover {
 }
 
 /* =======================
-   Top Tabs (Lead / Insight)
+   Top Nav Buttons — FIX for half-cut display
    ======================= */
-.stTabs [role="tablist"] {
-    gap: 22px;
-    padding-left: 4px;
-    border-bottom: 1px solid #e5e7eb;
+.top-nav-container {
+    margin-top: 8px;
+    margin-bottom: 14px;
+    padding-top: 4px;
 }
-.stTabs [role="tablist"] button {
-    font-size: 0.95rem;
-    font-weight: 500;
-    color: #6b7280;
-    padding: 0.4rem 0;
-}
-.stTabs [role="tablist"] button[aria-selected="true"] {
-    color: #6b00b8 !important;
-    font-weight: 700 !important;
-}
-.stTabs [data-baseweb="tab-highlight"] {
-    background-color: #6b00b8 !important;
-    height: 3px;
-    border-radius: 999px;
+
+.top-nav-container .stButton > button {
+    height: 42px !important;
+    min-height: 42px !important;
+    line-height: 42px !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    overflow: visible !important;
+    clip-path: none !important;
 }
 
 /* =======================
@@ -670,20 +659,15 @@ div[data-testid="stFileUploader"] button:hover {
     box-shadow: 0 0 0 2px rgba(107, 0, 184, 0.45) !important;
 }
 
-/* Secondary (unselected) buttons = grey */
 .stButton > button[kind="secondary"] {
     background: #f3f4f6 !important;
     color: #374151 !important;
     border-color: #d1d5db !important;
     box-shadow: none !important;
 }
-
-/* Optional: subtle hover for secondary */
 .stButton > button[kind="secondary"]:hover {
     background: #e5e7eb !important;
 }
-
-
 
 /* === Compact File Uploader (Sidebar) === */
 [data-testid="stFileUploader"] {
@@ -695,19 +679,16 @@ div[data-testid="stFileUploader"] button:hover {
     margin-bottom: 8px !important;
 }
 
-/* Reduce padding inside the dropzone */
 [data-testid="stFileUploader"] section[data-testid="stFileUploaderDropzone"] {
     padding: 4px !important;
-    min-height: 85px !important;   /* default ~150px */
+    min-height: 85px !important;
     border: none !important;
 }
 
-/* Reduce line spacing inside uploader */
 [data-testid="stFileUploader"] div {
     line-height: 1.2rem !important;
 }
 
-/* Smaller Browse button */
 [data-testid="stFileUploader"] button {
     padding: 4px 12px !important;
     font-size: 0.85rem !important;
@@ -718,7 +699,6 @@ div[data-testid="stFileUploader"] button:hover {
    Disable Product Recommendation
    ================================ */
 
-/* Disable Product Recommendation */
 .lead-scope-radio [role="radiogroup"] > label:nth-child(3) {
     flex-direction: column;
     align-items: flex-start;
@@ -726,25 +706,21 @@ div[data-testid="stFileUploader"] button:hover {
     cursor: not-allowed;
 }
 
-/* Disable clicking */
 .lead-scope-radio [role="radiogroup"] > label:nth-child(3) input {
     pointer-events: none;
 }
 
-/* FIRST line: main label */
 .lead-scope-radio [role="radiogroup"] > label:nth-child(3) p:first-child {
     font-weight: 600;
     color: #374151;
 }
 
-/* SECOND line: Coming Soon */
 .lead-scope-radio [role="radiogroup"] > label:nth-child(3) p:last-child {
     font-size: 0.75rem;
     color: #9ca3af;
     font-style: italic;
     margin-top: 2px;
 }
-
 
 </style>
 """
@@ -766,12 +742,9 @@ def _safe_filename_component(s: str) -> str:
     s = re.sub(r"[^A-Za-z0-9_\-\.]", "", s)
     return s[:120]
 
+
 def normalize_company_name(name: str) -> str:
-    """
-    Normalize company names for fuzzy matching:
-    - lowercase
-    - remove spaces, hyphens, punctuation
-    """
+    """Normalize company names for fuzzy matching."""
     if not name:
         return ""
     name = name.lower().strip()
@@ -787,16 +760,10 @@ def generate_detailed_log(
     original_raw_log: str | None = None,
     run_ts: datetime.datetime | None = None,
 ) -> str:
-    """
-    Build the detailed download text according to the templates provided.
-    step_key values: "website", "firmo", "techno", "financials", "growth"
-    """
-    # run timestamp (local with offset)
     if run_ts is None:
         run_ts = datetime.datetime.now(datetime.timezone.utc).astimezone()
     run_iso = run_ts.isoformat()
 
-    # base header
     header = [
         "=== AGENTIC PIPELINE DETAILED LOG ===",
         f"Run Timestamp: {run_iso}",
@@ -807,11 +774,10 @@ def generate_detailed_log(
     ]
     buf = "\n".join(header)
 
-
-    # For convenience use a short ts string inside each template line
     ts = run_ts.strftime("%Y-%m-%d %H:%M:%S,%f")[:-3]
+    print("**********************************************************************************")
+    print(ts)
 
-    # Build the relevant step template
     if step_key == "website":
         lines = [
             f"{ts} - INFO - Starting Website Extraction Pipeline",
@@ -859,18 +825,23 @@ def generate_detailed_log(
         ]
         buf += _log_block_step(lines)
 
-    elif step_key == "techno":
+    elif step_key == "techno_and_spend":
         lines = [
-            f"{ts} - INFO - Starting Technographic Profiling",
+            f"{ts} - INFO - Starting Technographic Profiling & Est Spend Potential pipeline",
             f"{ts} - INFO - Input Entity = \"{company_display}\"",
             f"{ts} - INFO - [LAMBDA] Event received: {{\"Records\": [{{\"s3\": {{\"bucket\": {{\"name\": \"b2b-growth-agent\"}}, \"object\": {{\"key\": \"data_ingestion/Output/website/{csafe}.json\"}}}}}}], \"run_techno_lambda\": true}}",
             f"{ts} - INFO - Hitting technographic vendor APIs and public fingerprints for the detected domains",
             f"{ts} - INFO - Mapping identified products to normalized product categories (CRM, Marketing Automation, Cloud, Data, Security, etc.)",
             f"{ts} - INFO - Computing tech maturity level based on stack depth, cloud adoption and modern tool usage",
-            f"{ts} - INFO - Writing technographic profile to S3",
-            f"{ts} - INFO - Saved to: s3://b2b-growth-agent/data_ingestion/Output/techno/{csafe}.json",
             f"{ts} - INFO - Lambda completed successfully",
-            f"{ts} - INFO - Technographic profiling completed successfully",
+            f"{ts} - INFO - Fetching spend data from external vendor data APIs",
+            f"{ts} - INFO - Ingesting annual ICT, Telco, HW/SW and IT services spend buckets",
+            f"{ts} - INFO - Normalizing vendor-provided spend estimates using industry benchmarks",
+            f"{ts} - INFO - Assigning spend potential tier",
+            f"{ts} - INFO - Generating spend summary for account planning and segmentation",
+            f"{ts} - INFO - Writing technographic and spend potential profile",
+            f"{ts} - INFO - Saved to: s3://b2b-growth-agent/data_ingestion/Output/techno_and_spend/{csafe}.json",
+            f"{ts} - INFO - Technographic profiling & spend potential assessment completed successfully",
         ]
         buf += _log_block_step(lines)
 
@@ -910,8 +881,22 @@ def generate_detailed_log(
         ]
         buf += _log_block_step(lines)
 
+    elif step_key == "intent":
+        lines = [
+            f"{ts} - INFO - Starting Intent Signal Analysis Pipeline",
+            f"{ts} - INFO - Input Entity = \"{company_display}\"",
+            f"{ts} - INFO - Fetching third-party intent signals from external vendor data APIs",
+            f"{ts} - INFO - Processing aggregated behavioral signals across priority technology domains",
+            f"{ts} - INFO - Analyzing keyword frequency, recency and surge patterns from vendor feeds",
+            f"{ts} - INFO - Scoring intent strength using vendor-provided models and signal depth",
+            f"{ts} - INFO - Identifying competing vendors and products based on observed research behavior",
+            f"{ts} - INFO - Writing intent intelligence profile",
+            f"{ts} - INFO - Saved to: s3://b2b-growth-agent/data_ingestion/Output/intent/{csafe}.json",
+            f"{ts} - INFO - Intent signal enrichment completed successfully",
+        ]
+        buf += _log_block_step(lines)
+
     else:
-        # generic fallback
         lines = [
             f"{ts} - INFO - Starting {step_key}",
             f"{ts} - INFO - No specific template found; logging basic step info",
@@ -919,7 +904,6 @@ def generate_detailed_log(
         ]
         buf += _log_block_step(lines)
 
-    # add a tailing meta line
     buf += f"\n--- Generated by Agentic Lead Intelligence on {run_iso} ---\n"
     return buf
 
@@ -946,7 +930,38 @@ TASKS: List[Dict] = [
         ],
         "icon": "🏢",
     },
-    {"name": "Technographic Profiling", "cols": ["Tech Install"], "icon": "🖥️"},
+    {
+        "name": "Technographic Profiling & Est Spend Potential",
+        "cols": [
+            "Tech Install",
+            "Company_Annual_ICT_Spending_Bucket",
+            "Company_Annual_SW_Spending_Bucket",
+            "Company_Annual_HW_Spending_Bucket",
+            "Company_Annual_Telco_Spending_Bucket",
+            "Company_Annual_IT_Services_Spending_Bucket",
+            "Spend_Potential_Tier",
+            "Spend_Summary",
+        ],
+        "icon": "🖥️",
+    },
+    {
+        "name": "Intent Signal Analysis",
+        "cols": [
+            "Intent_Domain_1",
+            "Score_1",
+            "Domain_1_Top_Keywords (Top 5)",
+            "Intent_Domain_2",
+            "Score_2",
+            "Domain_2_Top_Keywords (Top 5)",
+            "Intent_Domain_3",
+            "Score_3",
+            "Domain_3_Top_Keywords (Top 5)",
+            "Competitor_Products_Searched",
+            "Intent_Priority_Tier",
+            "Intent_Summary",
+        ],
+        "icon": "🧠",
+    },
     {
         "name": "Financial Insights",
         "cols": [
@@ -961,7 +976,7 @@ TASKS: List[Dict] = [
         "icon": "💰",
     },
     {
-        "name": "Growth Signals",
+        "name": "Growth & Risk Signals",
         "cols": ["Signal Type", "Signal Details", "Signal Links"],
         "icon": "📈",
     },
@@ -969,7 +984,7 @@ TASKS: List[Dict] = [
 
 
 # ---------------------------
-# Static signal counts per company (for log simulation)
+# Static signal counts per company
 # ---------------------------
 STATIC_SIGNAL_COUNTS: Dict[str, Dict[str, int]] = {
     "A-Mark Precious Metals": {
@@ -1035,20 +1050,16 @@ def get_static_counts(company: str) -> Dict[str, int] | None:
     return None
 
 
+
 # ---------------------------
-# Agentic log definitions (for UI streaming)
+# Agentic log definitions
 # ---------------------------
 def get_agentic_steps(task_name: str, company: str) -> List[Dict[str, str]]:
-    """
-    Return a list of agentic log lines (with CSS classes) for each task.
-    Includes static signal counts in the final success line per step.
-    """
     c = company or "the selected company"
     name = task_name.strip().lower()
     counts = get_static_counts(company)
 
     def fmt_counts(keys_labels):
-        """Helper: build '(X foo, Y bar)' style suffix from counts."""
         if not counts:
             return ""
         parts = []
@@ -1060,203 +1071,103 @@ def get_agentic_steps(task_name: str, company: str) -> List[Dict[str, str]]:
             return ""
         return " (" + ", ".join(parts) + ")."
 
-    # 1) Website + entity resolution
     if name == "website extraction":
         suffix = fmt_counts([("web_signals", "web touchpoints")])
         steps = [
             {"cls": "title", "text": "STEP 1 — Website & Entity Resolution Phase"},
-            {"cls": "info", "text": f"🧾 User input: \"{c}\""},
-            {"cls": "info", "text": "🎯 Initializing Website Extraction Utility Agent."},
-            {
-                "cls": "info",
-                "text": "🌐 Extracting company websites via Google Search Crawler and LLM ranking...",
-            },
-            {
-                "cls": "info",
-                "text": "🔗 Identifying official domain and key web properties (regional sites, subdomains, social handles).",
-            },
-            {
-                "cls": "info",
-                "text": "🧩 Performing entity resolution — UID generation, fuzzy matching variants, and deduplication across sources.",
-            },
-            {
-                "cls": "info",
-                "text": f"📌 Locking canonical entity record for \"{c}\" for downstream enrichment.",
-            },
-            {
-                "cls": "success",
-                "text": f"✅ Website set & canonical company ID created successfully{suffix}",
-            },
+            {"cls": "info",  "text": f"🧾 User input: \"{c}\""},
+            {"cls": "info",  "text": "🎯 Initializing Website Extraction Utility Agent."},
+            {"cls": "info",  "text": "🌐 Extracting company websites via Google Search Crawler and LLM ranking..."},
+            {"cls": "info",  "text": "🔗 Identifying official domain and key web properties (regional sites, subdomains, social handles)."},
+            {"cls": "info",  "text": "🧩 Performing entity resolution — UID generation, fuzzy matching variants, and deduplication across sources."},
+            {"cls": "info",  "text": f"📌 Locking canonical entity record for \"{c}\" for downstream enrichment."},
+            {"cls": "info",  "text": "🧪 Data quality validation completed. No anomalies or integrity issues detected."},
+            {"cls": "success","text": f"✅ Website set & canonical company ID created successfully{suffix}"},
         ]
 
-    # 2) Firmographics + website signal enrichment
     elif name == "firmographic enrichment":
-        suffix = fmt_counts(
-            [
-                ("firmo_signals", "firmographic attributes"),
-                ("web_signals", "website-derived fields"),
-            ]
-        )
+        suffix = fmt_counts([
+            ("firmo_signals", "firmographic attributes"),
+            ("web_signals", "website-derived fields"),
+        ])
         steps = [
-            {
-                "cls": "title",
-                "text": "STEP 2 — Firmographic & Website Signal Enrichment Phase",
-            },
-            {
-                "cls": "info",
-                "text": f"🚀 Initializing Firmographic Enrichment Agent for \"{c}\"...",
-            },
-            {
-                "cls": "info",
-                "text": "📞 Hitting vendor firmographic APIs with the canonical Company UID, Name and Domain.",
-            },
-            {
-                "cls": "info",
-                "text": "🏛️ Extracting legal name, founding year, HQ location, and global office footprint.",
-            },
-            {
-                "cls": "info",
-                "text": "👥 Reconciling employee range and revenue bands from multiple data providers.",
-            },
-            {
-                "cls": "info",
-                "text": f"🏭 Classifying industry, sub-industry, and key segments for \"{c}\".",
-            },
-            {
-                "cls": "info",
-                "text": "📰 Crawling company website sections — About Us, Newsroom, Product & Services, Contact Us.",
-            },
-            {
-                "cls": "info",
-                "text": "🧠 Converting unstructured page content into structured fields: company overview, solution areas, ICP hints, and positioning signals.",
-            },
-            {
-                "cls": "success",
-                "text": f"✅ Firmographic snapshot + website-derived signals enriched successfully{suffix}",
-            },
+            {"cls": "title", "text": "STEP 2 — Firmographic Enrichment Phase"},
+            {"cls": "info",  "text": f"🚀 Initializing Firmographic Enrichment Agent for \"{c}\"..."},
+            {"cls": "info",  "text": "📞 Hitting vendor firmographic APIs with the canonical Company UID, Name and Domain."},
+            {"cls": "info",  "text": "🏛️ Extracting legal name, founding year, HQ location, and global office footprint."},
+            {"cls": "info",  "text": "👥 Reconciling employee range and revenue bands from multiple data providers."},
+            {"cls": "info",  "text": f"🏭 Classifying industry, sub-industry, and key segments for \"{c}\"."},
+            {"cls": "info",  "text": "📰 Crawling company website sections — About Us, Newsroom, Product & Services, Contact Us."},
+            {"cls": "info",  "text": "🧠 Converting unstructured page content into structured fields: company overview, solution areas, ICP hints, and positioning signals."},
+            {"cls": "info",  "text": "🧪 Data quality validation completed. No anomalies or integrity issues detected."},
+            {"cls": "success","text": f"✅ Firmographic snapshot enriched successfully{suffix}"},
         ]
 
-    # 3) Technographic
-    elif name == "technographic profiling":
+    elif name == "technographic profiling & est spend potential":
         suffix = fmt_counts([("tech_signals", "technographic signals")])
         steps = [
-            {"cls": "title", "text": "STEP 3 — Technographic Profiling Phase"},
-            {
-                "cls": "info",
-                "text": f"🧪 Initializing Technographic Intelligence Agent for \"{c}\"...",
-            },
-            {
-                "cls": "info",
-                "text": "🔌 Hitting technographic vendor APIs and public fingerprints for the detected domains.",
-            },
-            {
-                "cls": "info",
-                "text": "🗂️ Mapping raw product names into normalized product categories (CRM, Marketing Automation, Cloud, Data, Security, etc.).",
-            },
-            {
-                "cls": "info",
-                "text": "📊 Estimating tech maturity level based on stack depth, cloud adoption and modern tool usage.",
-            },
-            {
-                "cls": "success",
-                "text": f"✅ Technographic profile and maturity score generated for \"{c}\"{suffix}",
-            },
+            {"cls": "title", "text": "STEP 3 — Technographic Profiling & Estimated Spend Potential Phase"},
+            {"cls": "info",  "text": f"🧪 Initializing Technographic + Spend Agent for \"{c}\"..."},
+            {"cls": "info",  "text": "🔌 Hitting technographic vendor APIs and public fingerprints for the detected domains."},
+            {"cls": "info",  "text": "🗂️ Mapping raw product names into normalized product categories (CRM, Marketing Automation, Cloud, Data, Security, etc.)."},
+            {"cls": "info",  "text": "📊 Estimating tech maturity level based on stack depth, cloud adoption and modern tool usage."},
+            {"cls": "info",  "text": "🌐 Fetching third-party modeled spend ranges for ICT, software, hardware, telco, and IT services."},
+            {"cls": "info",  "text": "📊 Normalizing spend buckets into consistent annual ranges for account planning."},
+            {"cls": "info",  "text": "🧪 Data quality validation completed. No anomalies or integrity issues detected."},
+            {"cls": "success","text": f"✅ Technology stack and estimated spend profile prepared for \"{c}\"."},
         ]
 
-    # 4) Financials
-    elif name == "financial insights":
-        suffix = fmt_counts(
-            [
-                ("fin_signals", "financial metrics & growth indicators"),
-            ]
-        )
+    elif name == "intent signal analysis":
         steps = [
-            {"cls": "title", "text": "STEP 4 — Financial Insights Phase"},
-            {
-                "cls": "info",
-                "text": f"💹 Initializing Financials Enrichment Agent for \"{c}\"...",
-            },
-            {
-                "cls": "info",
-                "text": "🌍 Hitting public financial APIs / filings aggregators using the canonical legal entity.",
-            },
-            {
-                "cls": "info",
-                "text": "🧽 Filtering returned records to the focal company and most recent filings.",
-            },
-            {
-                "cls": "info",
-                "text": "📑 Extracting last 3 years (and latest quarters where available) of revenue, EBITDA, net income and operating cash flow.",
-            },
-            {
-                "cls": "info",
-                "text": "📈 Computing YoY and QoQ growth rates for revenue, profitability and cash flow.",
-            },
-            {
-                "cls": "info",
-                "text": "🧮 Deriving financial health & momentum indicators (growth, profitability, leverage and liquidity).",
-            },
-            {
-                "cls": "success",
-                "text": f"✅ Financial summary and growth metrics prepared for scoring engines{suffix}",
-            },
+            {"cls": "title", "text": "STEP 4 — Intent Signal Analysis"},
+            {"cls": "info",  "text": f"🧠 Initializing Intent Analysis Agent for \"{c}\"..."},
+            {"cls": "info",  "text": "🌐 Fetching intent signals from external vendor data APIs."},
+            {"cls": "info",  "text": "🔍 Processing aggregated behavioral signals across priority technology domains (e.g., Networking, Digital Infrastructure, IoT & Edge, Security, etc)."},
+            {"cls": "info",  "text": "📊 Analyzing keyword frequency, recency, and surge patterns from vendor feeds."},
+            {"cls": "info",  "text": "🧠 Leveraging LLM reasoning to contextualize keywords, infer buying themes, and map signals to standardized technology domains."},
+            {"cls": "info",  "text": "🏷️ Scoring intent strength using vendor-provided models and signal depth."},
+            {"cls": "info",  "text": "🧩 Identifying competing vendors and products based on observed research behavior."},
+            {"cls": "info",  "text": "⏱️ Determining buying-stage and intent priority tier."},
+            {"cls": "info",  "text": "🧪 Data quality validation completed. No anomalies or integrity issues detected."},
+            {"cls": "success","text": f"✅ High-confidence third-party intent signals identified for \"{c}\"."},
         ]
 
-    # 5) News & Growth/Risk signals
-    elif name == "growth signals":
+    elif name == "financial insights":
+        suffix = fmt_counts([("fin_signals", "financial metrics & growth indicators")])
+        steps = [
+            {"cls": "title", "text": "STEP 5 — Financial Insights Phase"},
+            {"cls": "info",  "text": f"💹 Initializing Financials Enrichment Agent for \"{c}\"..."},
+            {"cls": "info",  "text": "🌍 Hitting public financial APIs / filings aggregators using the canonical legal entity."},
+            {"cls": "info",  "text": "🧽 Filtering returned records to the focal company and most recent filings."},
+            {"cls": "info",  "text": "📑 Extracting last 3 years (and latest quarters where available) of revenue, EBITDA, net income and operating cash flow."},
+            {"cls": "info",  "text": "📈 Computing YoY and QoQ growth rates for revenue, profitability and cash flow."},
+            {"cls": "info",  "text": "🧮 Deriving financial health & momentum indicators (growth, profitability, leverage and liquidity)."},
+            {"cls": "info",  "text": "🧪 Data quality validation completed. No anomalies or integrity issues detected."},
+            {"cls": "success","text": f"✅ Financial summary and growth metrics prepared for scoring engines{suffix}"},
+        ]
+
+    elif name == "growth & risk signals":
         suffix = fmt_counts([("growth_signals", "news-based growth & risk signals")])
         steps = [
-            {
-                "cls": "title",
-                "text": "STEP 5 — News & Signal Detection Phase",
-            },
-            {
-                "cls": "info",
-                "text": f"🛰️ Initializing News & Signal Detection Agent for \"{c}\"...",
-            },
-            {
-                "cls": "info",
-                "text": f"📰 Fetching last 12 months of news, press releases, blogs and regulatory disclosures mentioning \"{c}\".",
-            },
-            {
-                "cls": "info",
-                "text": "🧽 Deduplicating articles and filtering for high-relevance company events.",
-            },
-            {
-                "cls": "info",
-                "text": "🧠 Running LLM-based theme classification using the GTM taxonomy (Growth Signals, Financials, Risk, Strategic Outlook, Customer & Market, Competitor, ESG, Challenges).",
-            },
-            {
-                "cls": "info",
-                "text": "📌 Highlighting Growth Signal sub-themes: Acquisition & Mergers, Awards & Industry Recognition, Business Expansion, Leadership Changes, New Product/Technology Launches, Fundings & Capital Raises.",
-            },
-            {
-                "cls": "info",
-                "text": "⚠️ Capturing Risk-oriented themes: Regulatory/Legal/Compliance, ESG & Sustainability, Bankruptcy & Financial Distress.",
-            },
-            {
-                "cls": "info",
-                "text": "💰 Enriching Financials-related news: Revenue & Earnings, Profitability & Dividends, Debt & Liquidity.",
-            },
-            {
-                "cls": "info",
-                "text": "📊 Adding context from Strategic Outlook, Customer/Market focus, Competitor actions and Business Pain Points.",
-            },
-            {
-                "cls": "info",
-                "text": "🔗 For each signal, attaching source URL, timestamp, sentiment and theme/sub-theme label.",
-            },
-            {
-                "cls": "success",
-                "text": f"✅ Prioritized growth & risk signal cards prepared for \"{c}\"{suffix}",
-            },
+            {"cls": "title", "text": "STEP 6 — Growth & Risk Signal Detection Phase"},
+            {"cls": "info",  "text": f"🛰️ Initializing Growth & Risk Signal Detection Agent for \"{c}\"..."},
+            {"cls": "info",  "text": f"📰 Fetching last 12 months of news, press releases, blogs and regulatory disclosures mentioning \"{c}\"."},
+            {"cls": "info",  "text": "🧽 Deduplicating articles and filtering for high-relevance company events."},
+            {"cls": "info",  "text": "🧠 Running LLM-based theme classification using the GTM taxonomy (Growth Signals, Financials, Risk, Strategic Outlook, Customer & Market, Competitor, ESG, Challenges)."},
+            {"cls": "info",  "text": "📌 Highlighting Growth Signal sub-themes: Acquisition & Mergers, Awards & Industry Recognition, Business Expansion, Leadership Changes, New Product/Technology Launches, Fundings & Capital Raises."},
+            {"cls": "info",  "text": "⚠️ Capturing Risk-oriented themes: Regulatory/Legal/Compliance, ESG & Sustainability, Bankruptcy & Financial Distress."},
+            {"cls": "info",  "text": "💰 Enriching Financials-related news: Revenue & Earnings, Profitability & Dividends, Debt & Liquidity."},
+            {"cls": "info",  "text": "📊 Adding context from Strategic Outlook, Customer/Market focus, Competitor actions and Business Pain Points."},
+            {"cls": "info",  "text": "🔗 For each signal, attaching source URL, timestamp, sentiment and theme/sub-theme label."},
+            {"cls": "info",  "text": "🧪 Data quality validation completed. No anomalies or integrity issues detected."},
+            {"cls": "success","text": f"✅ Prioritized growth & risk signal cards prepared for \"{c}\"{suffix}"},
         ]
 
     else:
         steps = [
-            {"cls": "title", "text": f"Running Agentic Step for {task_name}"},
-            {"cls": "info", "text": "Orchestrating specialized agents for this capability..."},
-            {"cls": "success", "text": "✅ Step completed."},
+            {"cls": "title",  "text": f"Running Agentic Step for {task_name}"},
+            {"cls": "info",   "text": "Orchestrating specialized agents for this capability..."},
+            {"cls": "success","text": "✅ Step completed."},
         ]
 
     steps.append({"cls": "meta", "text": "Background execution completed just now."})
@@ -1264,11 +1175,32 @@ def get_agentic_steps(task_name: str, company: str) -> List[Dict[str, str]]:
 
 
 # ---------------------------
-# utility helpers
+# Utility helpers
 # ---------------------------
 def pretty_label(col: str) -> str:
     """Cleans up a column name for display."""
     return col.replace("_", " ").title()
+
+
+def display_value(val, col_name: str | None = None):
+    """Normalize values for clean UI display."""
+    if val is None:
+        return "(no value)"
+    try:
+        if pd.isna(val):
+            return "(no value)"
+    except Exception:
+        pass
+    if isinstance(val, (pd.Timestamp, datetime.datetime, datetime.date)):
+        return val.strftime("%Y-%m-%d")
+    if col_name and col_name.lower().endswith("_pct"):
+        if isinstance(val, (int, float)):
+            return f"{round(val * 100)}%"
+    if isinstance(val, float):
+        if val.is_integer():
+            return str(int(val))
+        return str(val)
+    return str(val)
 
 
 def format_tech_install(raw: str) -> str:
@@ -1276,40 +1208,118 @@ def format_tech_install(raw: str) -> str:
         return "(no value)"
 
     s = str(raw).strip()
+    UL_STYLE = "list-style-type: disc; padding-left: 18px; margin: 8px 0; line-height: 1.6;"
 
-    # Case 1: list-like string → ["AWS","Azure"]
     if s.startswith("[") and s.endswith("]"):
         inner = s[1:-1].strip()
         if not inner:
             return "(no value)"
         items = [x.strip(" '\"") for x in inner.split(",") if x.strip(" '\"")]
-        return "<ul>" + "".join([f"<li>{i}</li>" for i in items]) + "</ul>"
+        if not items:
+            return "(no value)"
+        return (
+            f"<ul style='{UL_STYLE}'>"
+            + "".join([f"<li>{html.escape(i)}</li>" for i in items])
+            + "</ul>"
+        )
 
-    # Case 2: bullet style merged (• Cloud:..., • Security:...)
     if "•" in s:
         parts = [p.strip(" •\n") for p in s.split("•") if p.strip(" •\n")]
         formatted = []
         for p in parts:
             if ":" in p:
                 label, rest = p.split(":", 1)
-                formatted.append(f"<li><b>{label.strip()}:</b>{rest}</li>")
+                formatted.append(
+                    f"<li><b>{html.escape(label.strip())}:</b> {html.escape(rest.strip())}</li>"
+                )
             else:
-                formatted.append(f"<li>{p}</li>")
-        return "<ul>" + "".join(formatted) + "</ul>"
+                formatted.append(f"<li>{html.escape(p)}</li>")
+        if not formatted:
+            return "(no value)"
+        return f"<ul style='{UL_STYLE}'>" + "".join(formatted) + "</ul>"
 
-
-    # Case 3: newline separated
     parts = [p.strip(" -•\n") for p in s.split("\n") if p.strip(" -•\n")]
     if len(parts) > 1:
         formatted = []
         for p in parts:
             if ":" in p:
                 label, rest = p.split(":", 1)
-                formatted.append(f"<li><b>{label.strip()}:</b>{rest}</li>")
+                formatted.append(
+                    f"<li><b>{html.escape(label.strip())}:</b> {html.escape(rest.strip())}</li>"
+                )
             else:
-                formatted.append(f"<li>{p}</li>")
-        return "<ul>" + "".join(formatted) + "</ul>"
+                formatted.append(f"<li>{html.escape(p)}</li>")
+        return f"<ul style='{UL_STYLE}'>" + "".join(formatted) + "</ul>"
 
+    return html.escape(s)
+
+
+def format_techno_and_spend_block(row):
+    html_parts = ["<div>"]
+
+    if row.get("Tech Install"):
+        html_parts.append(
+            "<details style='margin-top:8px;'>"
+            "<summary style='cursor:pointer; font-weight:600; color:#6b00b8;'>"
+            "Detailed Stack Breakdown"
+            "</summary>"
+            f"<div style='margin-top:6px;'>{format_tech_install(row.get('Tech Install'))}</div>"
+            "</details>"
+        )
+
+    html_parts.append(
+        "<details style='margin-top:8px;'>"
+        "<summary style='cursor:pointer; font-weight:600; color:#6b00b8;'>"
+        "Est Potential Spend"
+        "</summary>"
+        "<div style='margin-top:6px;'>"
+    )
+
+    html_parts.append(
+        "<ul style='list-style-type: disc; padding-left: 18px; margin: 8px 0; line-height: 1.6;'>"
+    )
+    html_parts.append(
+        f"<li><b>ICT Spend:</b> {display_value(row.get('Company_Annual_ICT_Spending_Bucket'))}</li>"
+    )
+    html_parts.append(
+        f"<li><b>Telco Spend:</b> {display_value(row.get('Company_Annual_Telco_Spending_Bucket'))}</li>"
+    )
+    html_parts.append(
+        f"<li><b>SW Spend:</b> {display_value(row.get('Company_Annual_SW_Spending_Bucket'))}</li>"
+    )
+    html_parts.append(
+        f"<li><b>HW Spend:</b> {display_value(row.get('Company_Annual_HW_Spending_Bucket'))}</li>"
+    )
+    html_parts.append(
+        f"<li><b>IT Services Spend:</b> {display_value(row.get('Company_Annual_IT_Services_Spending_Bucket'))}</li>"
+    )
+    html_parts.append("</ul>")
+    html_parts.append("</div></details>")
+    html_parts.append("</div>")
+
+    return "".join(html_parts)
+
+
+def format_intent_block(row):
+    html_parts = ["<div>"]
+    html_parts.append(
+        "<div style='margin-top:10px; color: #6b00b8;'><b>Intent Domain and Top Keywords</b></div>"
+    )
+    html_parts.append(
+        "<ul style='padding-left:0; list-style-position: inside;'>"
+    )
+    html_parts.append(
+        f"<li><b>{display_value(row.get('Intent_Domain_1'))}: </b> {display_value(row.get('Domain_1_Top_Keywords (Top 5)'))}</li>"
+    )
+    html_parts.append(
+        f"<li><b>{display_value(row.get('Intent_Domain_2'))}: </b> {display_value(row.get('Domain_2_Top_Keywords (Top 5)'))}</li>"
+    )
+    html_parts.append(
+        f"<li><b>{display_value(row.get('Intent_Domain_3'))}: </b> {display_value(row.get('Domain_3_Top_Keywords (Top 5)'))}</li>"
+    )
+    html_parts.append("</ul>")
+    html_parts.append("</div>")
+    return "".join(html_parts)
 
 
 def format_growth_signals(details: str, links: str) -> str:
@@ -1331,16 +1341,17 @@ def format_growth_signals(details: str, links: str) -> str:
             html_rows.append(f"<b>{label.strip()}:</b>{rest}")
         else:
             html_rows.append(p)
-
         if i < len(url_list):
-            html_rows.append(f"<br><b>Source:</b> <a href='{url_list[i]}' target='_blank'>{url_list[i]}</a>")
+            html_rows.append(
+                f"<br><b>Source:</b> <a href='{url_list[i]}' target='_blank'>{url_list[i]}</a>"
+            )
         html_rows.append("</li>")
     html_rows.append("</ul>")
 
     return "".join(html_rows)
 
 
-def format_locations_to_bullets(raw: str) -> str:
+def format_locations_to_bullets_old(raw: str) -> str:
     """Formats a string of locations into an HTML bulleted list."""
     if not raw or raw in ("(not available)", "(no value)"):
         return raw
@@ -1374,17 +1385,96 @@ def format_locations_to_bullets(raw: str) -> str:
     return s.replace("\n", "<br>")
 
 
+def format_locations_to_bullets(raw: str) -> str:
+    """Formats a string of locations into an HTML bulleted list.
+    Supports | as a section separator with a bold section heading.
+    """
+    if not raw or raw in ("(not available)", "(no value)"):
+        return raw
+
+    s = str(raw).strip()
+
+    # --- Handle list format ["loc1", "loc2"]
+    if s.startswith("[") and s.endswith("]"):
+        inner = s[1:-1].strip()
+        if inner == "":
+            return "(no value)"
+        items = [it.strip().strip("'\"") for it in inner.split(",") if it.strip().strip("'\"")]
+        items = [it for it in items if it]
+        if not items:
+            return "(no value)"
+        return "<br>".join([f"• {it}" for it in items])
+
+    # --- Handle | as section separator (e.g. "US Sites: • A • B | EMEA: • C • D")
+    if "|" in s:
+        sections = [sec.strip() for sec in s.split("|") if sec.strip()]
+        html_parts = []
+        for sec in sections:
+            # Check if section has a heading (text before first •)
+            if "•" in sec:
+                heading_part, _, bullets_part = sec.partition("•")
+                heading = heading_part.strip().rstrip(":-").strip()
+                # Reconstruct with the first bullet back
+                bullets_raw = "•" + bullets_part
+                bullets = [b.strip() for b in bullets_raw.split("•") if b.strip()]
+                if heading:
+                    html_parts.append(
+                        f"<div style='font-weight:600; color:#6b00b8; margin-top:8px; margin-bottom:2px;'>{heading}</div>"
+                    )
+                html_parts.append(
+                    "<br>".join([f"• {b}" for b in bullets])
+                )
+            else:
+                # No bullets — just a plain section heading or text
+                html_parts.append(
+                    f"<div style='font-weight:600; color:#6b00b8; margin-top:8px;'>{sec}</div>"
+                )
+        return "".join(html_parts)
+
+    # --- Handle • delimiter
+    if "•" in s:
+        # Check if there's a heading before the first bullet
+        heading_part, _, bullets_part = s.partition("•")
+        heading = heading_part.strip().rstrip(":-").strip()
+        bullets_raw = "•" + bullets_part
+        parts = [p.strip() for p in bullets_raw.split("•") if p.strip()]
+        result = ""
+        if heading:
+            result += f"<div style='font-weight:600; color:#6b00b8; margin-bottom:4px;'>{heading}</div>"
+        result += "<br>".join([f"• {p}" for p in parts])
+        return result
+
+    # --- Handle ; or | delimiters
+    for delim in [";", "|"]:
+        if delim in s:
+            parts = [p.strip(" •\n\t\r") for p in s.split(delim) if p.strip(" •\n\t\r")]
+            return "<br>".join([f"• {p}" for p in parts])
+
+    # --- Handle long comma-separated strings
+    if "," in s and len(s) > 90:
+        parts = [p.strip() for p in s.split(",") if p.strip()]
+        bullets = []
+        for j in range(0, len(parts), 3):
+            chunk = " ".join(parts[j:j + 3]).strip()
+            if chunk:
+                bullets.append(chunk)
+        return "<br>".join([f"• {b}" for b in bullets])
+
+    return s.replace("\n", "<br>")
+
+
 # ---------------------------
 # Mapping helper
 # ---------------------------
 def task_name_to_step_key(task_name: str) -> str:
-    """Map the display task name to the short step key used by generate_detailed_log."""
+    """Map display task name to short step key for generate_detailed_log."""
     m = {
         "Website Extraction": "website",
         "Firmographic Enrichment": "firmo",
-        "Technographic Profiling": "techno",
+        "Technographic Profiling & Est Spend Potential": "techno_and_spend",
         "Financial Insights": "financials",
-        "Growth Signals": "growth",
+        "Growth & Risk Signals": "growth",
+        "Intent Signal Analysis": "intent",
     }
     return m.get(task_name, task_name.lower().replace(" ", "_"))
 
@@ -1401,15 +1491,13 @@ def data_engineer_page():
         pass
 
     st.markdown(_CSS, unsafe_allow_html=True)
-    
+
     # ------------------------------------
     # Read Excel path from environment
     # ------------------------------------
-
     from pathlib import Path
     BASE_DIR = Path(__file__).resolve().parent
-    excel_path = BASE_DIR / "files" / "b2b_agentic_streamlit_demo_data.xlsx"
-
+    excel_path = BASE_DIR / "Files" / "b2b_agentic_streamlit_demo_data.xlsx"
 
     try:
         df = pd.read_excel(excel_path, sheet_name="Customer360")
@@ -1418,11 +1506,10 @@ def data_engineer_page():
         st.error(str(e))
         df = pd.DataFrame()
 
-
     if "uploaded_df" in st.session_state:
         df = st.session_state["uploaded_df"]
 
-    simulate_time_per_step = 0.7  # seconds per log line
+    simulate_time_per_step = 0.7
 
     # --- Session State Defaults ---
     if "placeholders" not in st.session_state or not isinstance(
@@ -1448,10 +1535,8 @@ def data_engineer_page():
     if "last_valid_scope" not in st.session_state:
         st.session_state.last_valid_scope = "ingest"
 
-    # ----------------------------------------
-
     # ---------------------------
-    # --- LEFT SIDEBAR (FIXED) ---
+    # --- LEFT SIDEBAR ---
     # ---------------------------
     with st.sidebar:
         st.markdown(
@@ -1467,47 +1552,25 @@ def data_engineer_page():
             """,
             unsafe_allow_html=True,
         )
-        st.markdown("<br>", unsafe_allow_html=True)
-        st.markdown("<div class='scope-title'>Enter Input</div>", unsafe_allow_html=True)
 
         input_area_ph = st.empty()
         with input_area_ph.container():
             if st.session_state.main_view == "lead":
                 st.markdown("<br>", unsafe_allow_html=True)
 
-                # radio_options = [
-                #     "Data Ingestion & Enrichment",
-                #     "Lead Scoring & Prioritization",
-                #     "🚧 Product Recommendation (Coming Soon)",
-                # ]
-            #     radio_options = [
-            #     "Data Ingestion & Enrichment",
-            #     "Lead Scoring & Prioritization",
-            #     "Product Recommendation (🚧Coming Soon)",
-            # ]
                 radio_options = [
                     "Data Ingestion & Enrichment",
                     "Lead Scoring & Prioritization",
-                    "Product Recommendation\n(Coming Soon)",
                 ]
 
-
                 st.markdown("<div class='lead-scope-radio'>", unsafe_allow_html=True)
+
                 if st.session_state.scope == "ingest":
                     default_index = 0
                 elif st.session_state.scope == "score":
                     default_index = 1
                 else:
-                    default_index = 2
-
-                # chosen = st.radio(
-                #     "Select Scope",
-                #     radio_options,
-                #     index=default_index,
-                #     key="scope_radio",
-                #     label_visibility="visible",
-                # )
-                
+                    default_index = 0
 
                 chosen = st.radio(
                     "Select Scope",
@@ -1517,36 +1580,19 @@ def data_engineer_page():
                     label_visibility="visible",
                 )
 
-                st.markdown("</div>", unsafe_allow_html=True)
-
-
-                # if chosen == radio_options[0]:
-                #     st.session_state.scope = "ingest"
-                # elif chosen == radio_options[1]:
-                #     st.session_state.scope = "score"
-                # else:
-                #     st.session_state.scope = "coming_soon"
                 if chosen == radio_options[0]:
                     st.session_state.scope = "ingest"
                     st.session_state.last_valid_scope = "ingest"
-
                 elif chosen == radio_options[1]:
                     st.session_state.scope = "score"
                     st.session_state.last_valid_scope = "score"
 
-                else:
-                    # Product Recommendation (Coming Soon)
-                    st.warning("🚧 Product Recommendation is coming soon.")
-                    st.session_state.scope = st.session_state.last_valid_scope
-                    st.rerun()
-
-
-                st.markdown("<br>", unsafe_allow_html=True)
+                st.markdown("<div class='scope-title'>Select Input</div>", unsafe_allow_html=True)
 
                 uploaded_file = st.file_uploader(
                     "Upload data file",
                     type=["xlsx", "xls", "csv"],
-                    key="data_file_uploader"
+                    key="data_file_uploader",
                 )
 
                 if uploaded_file is not None:
@@ -1587,13 +1633,14 @@ def data_engineer_page():
                     )
 
                     st.session_state.lead_list_name = selected_lead_list
-                    selected_company = None  # Not required for scoring
+                    selected_company = None
 
                 else:
                     selected_company = st.text_input(
                         "Company Name",
                         key="company_input",
                         placeholder="Type company name",
+                        value = "AvePoint",
                         on_change=_clear_right_side,
                     )
 
@@ -1601,7 +1648,7 @@ def data_engineer_page():
                 _render_insight_sidebar_inputs()
 
         selected_company = st.session_state.get("company_input")
-        # Preserve selected company across reruns (e.g., download button clicks)
+
         if not st.session_state.get("company_input") and st.session_state.get("last_selected_company"):
             st.session_state.company_input = st.session_state.last_selected_company
 
@@ -1641,7 +1688,7 @@ def data_engineer_page():
             st.divider()
 
     # --------------------------------
-    # --- TOP NAVIGATION BAR (TAB STYLE) - NOW USING st.columns ---
+    # --- TOP NAVIGATION BAR ---
     # --------------------------------
     st.markdown("<div class='top-nav-container'>", unsafe_allow_html=True)
 
@@ -1668,43 +1715,36 @@ def data_engineer_page():
             use_container_width=True,
         )
 
-    st.markdown("</div>", unsafe_allow_html=True)  # close top-nav-container
+    st.markdown("</div>", unsafe_allow_html=True)
 
     # ---------------------------
-    # --- MAIN PANEL (CONTENT ROUTING) ---
+    # --- MAIN PANEL ---
     # ---------------------------
     if st.session_state.main_view == "lead":
 
         if st.session_state.scope == "score":
-            # print(df)
             try:
                 lead_scoring_page(df)
             except Exception as e:
                 st.error(f"Failed to load Lead Scoring page: {e}")
             return
 
-        if st.session_state.scope == "coming_soon":
-            st.markdown("<div class='main-panel'>", unsafe_allow_html=True)
-            st.markdown("## 🧪 Product Recommendation")
-            st.info("🚧 Product Recommendation Studio is under development. Coming soon!")
-            st.markdown("</div>", unsafe_allow_html=True)
-            return
-
-
         st.markdown("<div class='main-panel'>", unsafe_allow_html=True)
 
         st.markdown(
             "<h3 class='main-title'>"
             "<span style='font-size: 1.1em;'>⚙️</span> "
-            "Ingestion & Enrichment Console — Company 360° Pipeline"
+            "Data Ingestion & Enrichment — Customer 360° Intelligence Pipeline"
             "</h3>",
             unsafe_allow_html=True,
         )
 
         st.markdown(
             "<p class='panel-desc-left'>"
-            "This console is designed to provide transparency into the enrichment pipeline by displaying agent execution status, "
-            "extracted signals, and validation outcomes, ensuring accuracy and explainability before downstream prioritization."
+            "This console operationalizes the Customer 360° intelligence layer by orchestrating firmographic, technographic, "
+            "intent, financial, and growth signal enrichment. Each step provides full transparency into agent execution, "
+            "data validation, and explainability outputs — ensuring a trusted foundation before downstream lead scoring, "
+            "prioritization, and product recommendation."
             "</p>",
             unsafe_allow_html=True,
         )
@@ -1716,7 +1756,7 @@ def data_engineer_page():
             )
         with top_cols[1]:
             if st.button(
-                "Stop Process", key="stop_pipeline",  type="secondary",  use_container_width=True
+                "Stop Process", key="stop_pipeline", type="secondary", use_container_width=True
             ):
                 st.session_state.stop_requested = True
 
@@ -1741,18 +1781,15 @@ def data_engineer_page():
                 header_ph = st.empty()
                 dot_ph = st.empty()
 
-                # NEW: render status based on session state
                 if st.session_state.get(f"task_done_{i}", False):
-                    # task completed in a previous run
                     status_html = (
-                        f"{status_dot('#10b981')}"
-                        f"<span style='color:#10b981;'>— Complete</span>"
+                        f"{status_dot('#2db24a', 12)}"
+                        f"<span style='color:#2db24a; font-weight:600;'>— Complete</span>"
                     )
                 else:
-                    # default = pending
                     status_html = (
-                        f"{status_dot('#999999')}"
-                        f"<span style='font-weight:600; color:#666;'>— Pending</span>"
+                        f"{status_dot('#999999', 12)}"
+                        f"<span style='color:#888; font-weight:600;'>— Pending</span>"
                     )
 
                 header_html = (
@@ -1762,18 +1799,9 @@ def data_engineer_page():
                 )
                 header_ph.markdown(header_html, unsafe_allow_html=True)
 
-                # header_html = (
-                #     f"<div class='task-card-header'>"
-                #     f"<div class='task-name'>{t['icon']} {t['name']} "
-                #     f"{status_dot('#999999')}<span style='font-weight:600; color:#666;'>— Pending</span></div>"
-                #     f"</div>"
-                # )
-                # header_ph.markdown(header_html, unsafe_allow_html=True)
-
                 st.markdown("<div class='task-card-body'>", unsafe_allow_html=True)
                 progress_ph = st.empty()
 
-                # Agentic log area
                 log_ph = st.empty()
                 if not st.session_state.get(f"log_{i}"):
                     log_ph.markdown(
@@ -1781,53 +1809,53 @@ def data_engineer_page():
                         unsafe_allow_html=True,
                     )
                 else:
-                    # Re-render existing log (so UI persists even on rerun)
                     existing_log = st.session_state.get(f"log_{i}", "")
-
                     if existing_log:
-                        # full HTML from stored classes
                         formatted_html = ""
+
+
                         for ln in existing_log.split("\n"):
-                            # expected format: "{timestamp} - {CLS} - {text}"
                             try:
-                                _, cls, text = ln.split(" - ", 2)
+                                ts, cls, text = ln.split(" - ", 2)
                                 cls = cls.lower()
-                            except:
-                                cls = "info"
-                                text = ln
-
-                            formatted_html += f"<div class='agent-log-line {cls}'>{html.escape(text)}</div>"
-
-                        log_ph.markdown(f"<div class='agent-log-box'>{formatted_html}</div>", unsafe_allow_html=True)
-
+                                ts_html = f"<span class='log-ts'>{html.escape(ts)}</span>"
+                                text_html = html.escape(text)
+                                formatted_html += f"<div class='agent-log-line {cls}'>{ts_html}{text_html}</div>"
+                            except Exception:
+                                formatted_html += f"<div class='agent-log-line info'>{html.escape(ln)}</div>"
+                        log_ph.markdown(f"<div class='agent-log-box'>{formatted_html}</div>",
+                                                    unsafe_allow_html=True,
+                                                )
                     else:
                         log_ph.markdown(
                             "<div class='agent-log-box agent-log-empty'>Background agent pipeline will appear here once the process starts.</div>",
                             unsafe_allow_html=True,
                         )
 
-                    log_html = "".join(
-                        [f"<div class='agent-log-line'>{line}</div>" for line in existing_log.split("\n")]
-                    )
-                    log_ph.markdown(f"<div class='agent-log-box'>{log_html}</div>", unsafe_allow_html=True)
 
-
-                # Enrichment details (collapsed until task finishes)
+                DE_EXPANDER_LABELS = {
+                "Website Extraction":                              "🌐 View Extracted Website & Entity Data",
+                "Firmographic Enrichment":                         "🏢 View Firmographic Profile",
+                "Technographic Profiling & Est Spend Potential":   "🖥️ View Tech Stack & Spend Potential",
+                "Intent Signal Analysis":                          "🧠 View Intent Signals & Keywords",
+                "Financial Insights":                              "💰 View Financial Insights",
+                "Growth & Risk Signals":                           "📈 View Growth & Risk Signals",
+                }
                 exp = st.expander(
-                    "Expand AI Enrichment Details",
+                    DE_EXPANDER_LABELS.get(t["name"], f"{t['name']} Details"),
                     expanded=st.session_state.get(expander_key, False),
                 )
+
+
                 with exp:
                     results_ph = st.empty()
                     cached_key = f"result_html_{i}"
 
-                    # Show results only if this task has completed in this session run
                     if st.session_state.get(cached_key, None) and st.session_state.get(f"task_done_{i}", False):
                         results_ph.markdown(
                             st.session_state[cached_key], unsafe_allow_html=True
                         )
                     else:
-                        # keep placeholder until real results are produced
                         results_ph.markdown(
                             "<div class='output-box'>(no results yet)</div>",
                             unsafe_allow_html=True,
@@ -1846,7 +1874,6 @@ def data_engineer_page():
                     "cached_key": f"result_html_{i}",
                 }
 
-
         # --- Pipeline Execution Logic ---
         if launch_clicked:
             st.session_state.stop_requested = False
@@ -1856,44 +1883,30 @@ def data_engineer_page():
             else:
                 name_str = str(selected_company).strip()
 
-                # rows = (
-                #     df[df["company_name"].astype(str).str.strip() == name_str]
-                #     if "company_name" in df.columns
-                #     else pd.DataFrame()
-                # )
                 if "company_name" in df.columns:
                     user_key = normalize_company_name(name_str)
-
                     df["_company_key"] = (
-                        df["company_name"]
-                        .astype(str)
-                        .apply(normalize_company_name)
+                        df["company_name"].astype(str).apply(normalize_company_name)
                     )
-
                     rows = df[df["_company_key"] == user_key]
                     if "_company_key" in df.columns:
                         df.drop(columns=["_company_key"], inplace=True)
-
                 else:
                     rows = pd.DataFrame()
-
 
                 if rows.empty:
                     st.error("Selected company not found in data source.")
                 else:
                     row = rows.iloc[0]
 
-                    # Reset run state
                     st.session_state.pipeline_has_run = False
                     st.session_state.detailed_logs_list = []
 
                     total_tasks = len(TASKS)
                     overall_progress = st.progress(0, text="Overall Pipeline Progress")
 
-                    # Safe filename
                     csafe_run = _safe_filename_component(name_str)
 
-                    # ----------- Execute each task -----------
                     for i, task in enumerate(TASKS):
                         if st.session_state.get("stop_requested", False):
                             break
@@ -1902,49 +1915,57 @@ def data_engineer_page():
                         if ph is None:
                             continue
 
-                        dot_ph = ph["dot_ph"]
-                        header_ph = ph["header_ph"]
+                        dot_ph      = ph["dot_ph"]
+                        header_ph   = ph["header_ph"]
                         progress_ph = ph["progress_ph"]
-                        log_ph = ph["log_ph"]
-                        results_ph = ph["results_ph"]
+                        log_ph      = ph["log_ph"]
+                        results_ph  = ph["results_ph"]
                         expander_key = ph["expander_key"]
-                        cached_key = ph["cached_key"]
+                        cached_key  = ph["cached_key"]
 
-                        # Clear previous logs/results
                         st.session_state.pop(cached_key, None)
                         st.session_state.pop(f"log_{i}", None)
                         st.session_state.pop(f"detailed_log_{i}", None)
                         st.session_state[f"task_done_{i}"] = False
 
-                        # Mark task = running in header
                         header_ph.markdown(
                             f"<div class='task-card-header'><div class='task-name'>{task['icon']} {task['name']} "
-                            f"{status_dot('#f0c040')} <span style='color:#888;'>— Running</span></div></div>",
+                            f"{status_dot('#f0c040', 12)}<span style='color:#f0c040;'>— Running</span></div></div>",
                             unsafe_allow_html=True,
                         )
 
-                        # -------- Agentic Step Streaming --------
                         agent_steps = get_agentic_steps(task["name"], name_str)
 
-                        log_html = ""
+                        log_html   = ""
                         plain_lines = []
-
                         total_lines = len(agent_steps)
+
 
                         for idx, step in enumerate(agent_steps, start=1):
                             if st.session_state.get("stop_requested", False):
                                 break
 
-                            cls = step.get("cls", "info")
-                            text = step.get("text", "")
+                            cls          = step.get("cls", "info")
+                            text         = step.get("text", "")
+                            ts_line      = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
                             escaped_text = html.escape(text)
 
-                            # Build HTML log stream
-                            log_html += f"<div class='agent-log-line {cls}'>{escaped_text}</div>"
-
-                            ts_line = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                            # Build plain log for session state
                             plain_lines.append(f"{ts_line} - {cls} - {text}")
                             st.session_state[f"log_{i}"] = "\n".join(plain_lines)
+
+                            # Build HTML ONLY with timestamp — no separate untimestamped entry
+                            # ts_html   = f"<span style='color:#999; font-size:11px; margin-right:8px;'>{ts_line}</span>"
+                            # log_html += f"<div class='agent-log-line {cls}'>{ts_html}{escaped_text}</div>"
+                            # FIXED — purple pill style matching lead_scoring
+                            ts_html = f"<span class='source-tag'>{ts_line}</span>"
+                            # log_html += f"<div class='agent-log-line {cls}'>{ts_html}{escaped_text}</div>"
+
+                            log_html += (
+                                f"<div class='agent-log-line {cls}'>"
+                                f"<span class='source-tag'>{ts_line}</span> {escaped_text}"
+                                f"</div>"
+                            )
 
                             log_ph.markdown(
                                 f"<div class='agent-log-box'>{log_html}</div>",
@@ -1952,13 +1973,14 @@ def data_engineer_page():
                             )
 
                             pct = int((idx / max(total_lines, 1)) * 100)
+                            # progress_ph.markdown(...)
                             progress_ph.markdown(
-                                f"<div style='width:100%'>"
-                                f"<div style='margin-bottom:6px; font-weight:600; font-size: 13px; color: #333;'>Executing... {pct}%</div>"
-                                f"<progress value='{pct}' max='100' class='progress-inline'></progress>"
-                                f"</div>",
-                                unsafe_allow_html=True,
-                            )
+                            f"<div style='width:100%'>"
+                            f"<div style='margin-bottom:6px; font-weight:600; font-size:13px; color:#333;'>Executing... {pct}%</div>"
+                            f"<progress value='{pct}' max='100' class='progress-inline'></progress>"
+                            f"</div>",
+                            unsafe_allow_html=True)
+
 
                             time.sleep(simulate_time_per_step)
 
@@ -1974,7 +1996,6 @@ def data_engineer_page():
                             )
                             break
 
-                        # Mark task as finished
                         progress_ph.markdown(
                             "<div style='padding:8px;'><strong>Task Finished.</strong></div>",
                             unsafe_allow_html=True,
@@ -1988,13 +2009,26 @@ def data_engineer_page():
                         # -------- Result HTML for Expander --------
                         html_rows = []
 
-                        if task["name"] == "Growth Signals":
-                            details = row.get("Signal Details", "")
-                            links = row.get("Signal Links", "")
+                        if task["name"] == "Growth & Risk Signals":
+                            details   = row.get("Signal Details", "")
+                            links     = row.get("Signal Links", "")
                             formatted = format_growth_signals(details, links)
                             html_rows.append(
                                 f"<div class='kv'><div class='label'>Growth Signals</div>{formatted}</div>"
                             )
+
+                        elif task["name"] == "Technographic Profiling & Est Spend Potential":
+                            formatted = format_techno_and_spend_block(row)
+                            html_rows.append(
+                                f"<div class='kv'><div class='label'></div>{formatted}</div>"
+                            )
+
+                        elif task["name"] == "Intent Signal Analysis":
+                            formatted = format_intent_block(row)
+                            html_rows.append(
+                                f"<div class='kv'><div class='label'></div>{formatted}</div>"
+                            )
+
                         else:
                             for col in task["cols"]:
                                 raw_val = row.get(col, "(no value)")
@@ -2012,15 +2046,16 @@ def data_engineer_page():
                                 )
 
                         result_html = f"<div class='output-box'>{''.join(html_rows)}</div>"
-
                         st.session_state[cached_key] = result_html
                         st.session_state[f"task_done_{i}"] = True
                         results_ph.markdown(result_html, unsafe_allow_html=True)
                         st.session_state[expander_key] = False
 
-                        # -------- Detailed Log (downloadable template) --------
-                        step_key = task_name_to_step_key(task["name"])
-                        original_raw = "\n".join([f"[{s['cls'].upper()}] {s['text']}" for s in agent_steps])
+                        # -------- Detailed Log --------
+                        step_key     = task_name_to_step_key(task["name"])
+                        original_raw = "\n".join(
+                            [f"[{s['cls'].upper()}] {s['text']}" for s in agent_steps]
+                        )
 
                         detailed_text = generate_detailed_log(
                             step_key,
@@ -2034,14 +2069,13 @@ def data_engineer_page():
                         st.session_state[f"detailed_log_{i}"] = detailed_text
                         st.session_state.detailed_logs_list.append(detailed_text)
 
-                        # Update overall progress bar
                         overall_pct = int(((i + 1) / total_tasks) * 100)
                         overall_progress.progress(
                             overall_pct,
                             text=f"Overall Pipeline Progress — {i+1}/{total_tasks} tasks complete",
                         )
 
-                    # -------- All tasks finished --------
+                    # -------- Pipeline complete --------
                     if st.session_state.get("stop_requested", False):
                         st.warning("Pipeline stopped by user.")
                         overall_progress.empty()
@@ -2049,34 +2083,35 @@ def data_engineer_page():
                         st.success("Pipeline finished successfully.")
                         overall_progress.empty()
 
-                        # Prepare cleaned Customer360 output
                         csafe = re.sub(r"[^a-z0-9]+", "_", name_str.lower()).strip("_") or "company"
 
                         customer360_filtered = rows.copy()
-                        customer360_filtered.rename(columns = {"company_name":"Company Name"}, inplace = True)
+                        customer360_filtered.rename(
+                            columns={"company_name": "Company Name"}, inplace=True
+                        )
                         customer360_filtered.drop(
                             columns=["lead_priority_label"], errors="ignore", inplace=True
                         )
 
-                        consolidated_log_text = "\n\n".join(st.session_state.detailed_logs_list or [])
+                        consolidated_log_text = "\n\n".join(
+                            st.session_state.detailed_logs_list or []
+                        )
 
-                        st.session_state.pipeline_has_run = True
-                        st.session_state.pipeline_company = name_str
-                        st.session_state.pipeline_csafe = csafe
+                        st.session_state.pipeline_has_run    = True
+                        st.session_state.pipeline_company    = name_str
+                        st.session_state.pipeline_csafe      = csafe
                         st.session_state.customer360_filtered = customer360_filtered
                         st.session_state.consolidated_log_text = consolidated_log_text
 
-
         # -------------------------------------------------
-        # AFTER PIPELINE: show download + DB update controls
+        # AFTER PIPELINE: download + DB update controls
         # -------------------------------------------------
         if st.session_state.get("pipeline_has_run", False):
-            # Only show if we're still on the same company
-            last_company = st.session_state.get("pipeline_company")
+            last_company    = st.session_state.get("pipeline_company")
             current_company = st.session_state.get("company_input")
 
             if last_company and current_company and last_company == current_company:
-                csafe = st.session_state.get("pipeline_csafe", "company")
+                csafe                = st.session_state.get("pipeline_csafe", "company")
                 customer360_filtered = st.session_state.get("customer360_filtered")
                 consolidated_log_text = st.session_state.get("consolidated_log_text", "")
 
@@ -2102,12 +2137,15 @@ def data_engineer_page():
                         )
 
                     # ------------------------------------
-                    # DB UPDATE PROMPT (USER INPUT)
+                    # DB UPDATE PROMPT — FIX: no \n\n in st.success
                     # ------------------------------------
-
-                    customer360_filtered = customer360_filtered.drop(columns=["_company_key"], errors="ignore")
-                    customer360_filtered = customer360_filtered.rename(columns={"unique_id": "Unique ID"})
-                    customer360_filtered.reset_index(drop = True, inplace = True)
+                    customer360_filtered = customer360_filtered.drop(
+                        columns=["_company_key"], errors="ignore"
+                    )
+                    customer360_filtered = customer360_filtered.rename(
+                        columns={"unique_id": "Unique ID"}
+                    )
+                    customer360_filtered.reset_index(drop=True, inplace=True)
 
                     st.markdown("---")
                     st.subheader("Update Customer 360 table in your database?")
@@ -2121,34 +2159,23 @@ def data_engineer_page():
                     user_reply = (user_update_msg or "").strip().lower()
 
                     if user_reply == "yes":
-                        db_name = "postgres"
+                        db_name    = "postgres"
                         table_name = "unified_customer_intelligence"
 
-                        st.success(
-                            f"Updating database...\n\n"
-                            f"**DB Name:** {db_name}\n"
-                            f"**Table Name:** {table_name}"
-                        )
-
-                        if st.button("🚀 Confirm Update", key="confirm_update_btn"):
-                            # hook your real DB write here if needed
-                            st.success(
-                                f"Customer 360 updated successfully in `{db_name}.{table_name}`!"
-                            )
-                            st.markdown("#### Preview of updated records:")
-                            st.dataframe(customer360_filtered)
+                        st.success(f"Updating database — DB: {db_name} | Table: {table_name}")
+                        st.markdown("#### Preview of updated records:")
+                        st.dataframe(customer360_filtered)
 
                     elif user_reply:
                         st.info("Okay, the database will not be updated.")
 
+        st.markdown("</div>", unsafe_allow_html=True)  # close main-panel
 
-        # close main-panel
-        st.markdown("</div>", unsafe_allow_html=True)
-
-            
-    else:  # Insight Studio
+    else:
         insight_studio_page()
 
 
 if __name__ == "__main__":
     data_engineer_page()
+
+
