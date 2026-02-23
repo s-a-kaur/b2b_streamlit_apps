@@ -1676,11 +1676,11 @@ def insight_studio_page():
             st.success("Showing scouting report for Wolfspeed")
             render_sales_report(WOLFSPEED_SCOUTING_REPORT)
 
-        elif company in ["a-mark", "amark", "a-mark precious metals", "a mark", "a mark precious metals"]:
-            with st.spinner("⚙️ Generating A-Mark Precious Metals scouting report..."):
-                time.sleep(6)
-            st.success("Showing scouting report for A-Mark Precious Metals")
-            render_sales_report(A_MARK_SCOUTING_REPORT)
+        # elif company in ["a-mark", "amark", "a-mark precious metals", "a mark", "a mark precious metals"]:
+        #     with st.spinner("⚙️ Generating A-Mark Precious Metals scouting report..."):
+        #         time.sleep(6)
+        #     st.success("Showing scouting report for A-Mark Precious Metals")
+        #     render_sales_report(A_MARK_SCOUTING_REPORT)
 
         elif company in ["avepoint"]:
             with st.spinner("⚙️ Generating AvePoint scouting report..."):

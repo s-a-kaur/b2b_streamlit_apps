@@ -127,7 +127,6 @@ def _render_insight_sidebar_inputs():
         if not st.session_state.get("company_input_insight"):
             st.session_state["company_input_insight"] = (
                 st.session_state.get("company_input")
-                or st.session_state.get("last_selected_company")
                 or "AvePoint"
             )
 
