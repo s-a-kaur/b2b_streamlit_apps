@@ -963,99 +963,39 @@ if "lead_prioritization_df" not in st.session_state:
         "⭐ High — Mining services operator with remote operations and strong IoT connectivity needs",
         "⚪ Low — Small education provider with simple connectivity requirements and limited IT spend",
     ],
+
     "Priority Rationale": [
+    # ACC001 IronBuild - High
+    "<ul><li>Rapid national expansion across active construction sites</li><li>Strong YoY growth with enterprise-wide digital transformation underway</li><li>High product adoption history and immediate connectivity scale demand</li></ul>",
 
-    # ACC001 — IronBuild Infrastructure Pty Ltd (High)
-    "<strong>Rapid infrastructure expansion creating immediate scale pressure.</strong>"
-    "<ul>"
-    "<li>National project growth and new site ramp-ups</li>"
-    "<li>Workforce expansion across distributed locations</li>"
-    "<li>Increased demand for standardized, secure connectivity</li>"
-    "<li>Rising network load across multiple active sites</li>"
-    "</ul>",
+    # ACC002 BlueHarbor - Medium
+    "<ul><li>Stable regional operations with moderate growth</li><li>Limited product footprint and no active expansion signals</li><li>No urgent ICT triggers detected in last 90 days</li></ul>",
 
-    # ACC002 — BlueHarbor Logistics (Medium)
-    "<strong>Stable operations with moderate optimization potential.</strong>"
-    "<ul>"
-    "<li>Steady regional footprint</li>"
-    "<li>Predictable connectivity usage</li>"
-    "<li>No major structural change or expansion trigger</li>"
-    "<li>Upsell depends on efficiency or consolidation initiatives</li>"
-    "</ul>",
+    # ACC003 SouthernGrid - High
+    "<ul><li>Acquisition-driven APAC expansion with rising multi-site complexity</li><li>Very high intent signals in digital infrastructure and security</li><li>Advanced tech maturity and strong financial profile</li></ul>",
 
-    # ACC003 — SouthernGrid Energy Services (High)
-    "<strong>Acquisition-led complexity increasing operational risk.</strong>"
-    "<ul>"
-    "<li>Multi-entity integration across geographies</li>"
-    "<li>Regulated utility environment requiring high resilience</li>"
-    "<li>Increased security and network coordination requirements</li>"
-    "<li>Growing operational footprint driving infrastructure strain</li>"
-    "</ul>",
+    # ACC004 ApexHealth - Medium
+    "<ul><li>Multi-site healthcare provider with clear collaboration and security intent</li><li>Regulated environment creates methodical but meaningful sales motion</li><li>Performance-sensitive operations with moderate expansion activity</li></ul>",
 
-    # ACC004 — ApexHealth Clinics Group (Medium)
-    "<strong>Healthcare expansion with performance sensitivity.</strong>"
-    "<ul>"
-    "<li>Additional clinic rollouts increasing site count</li>"
-    "<li>High uptime and compliance requirements</li>"
-    "<li>Growing collaboration and secure access dependency</li>"
-    "<li>Moderate but steady demand growth</li>"
-    "</ul>",
+    # ACC005 HorizonAgri - Low
+    "<ul><li>Flat growth with limited digital maturity</li><li>Minimal ICT investment appetite</li><li>No active expansion or transformation signals detected</li></ul>",
 
-    # ACC005 — HorizonAgri Advisory (Low)
-    "<strong>Limited growth and low digital dependency.</strong>"
-    "<ul>"
-    "<li>Flat performance and stable footprint</li>"
-    "<li>Minimal operational complexity</li>"
-    "<li>No expansion, hiring, or structural triggers</li>"
-    "<li>Low urgency for infrastructure evolution</li>"
-    "</ul>",
+    # ACC006 NovaTech - High
+    "<ul><li>Global manufacturer undergoing M&A-led transformation</li><li>Very high growth momentum with advanced multi-cloud stack</li><li>Enterprise-wide automation programs signal broad long-term potential</li></ul>",
 
-    # ACC006 — NovaTech Industrial Manufacturing (High)
-    "<strong>Enterprise transformation and automation at scale.</strong>"
-    "<ul>"
-    "<li>M&A and automation programs increasing system interdependence</li>"
-    "<li>Multi-cloud and ERP-heavy environment</li>"
-    "<li>Operational modernization creating bandwidth and resilience pressure</li>"
-    "<li>Global footprint increasing infrastructure complexity</li>"
-    "</ul>",
+    # ACC007 CoastalBuild - Medium
+    "<ul><li>Project-driven demand with moderate growth</li><li>Connectivity needs are real but tied to project pipeline timing</li><li>Engagement opportunity depends on site ramp-up activity</li></ul>",
 
-    # ACC007 — CoastalBuild Projects (Medium)
-    "<strong>Project-driven, temporary scale spikes.</strong>"
-    "<ul>"
-    "<li>Connectivity demand tied to new construction sites</li>"
-    "<li>Short-term bandwidth surges during project ramps</li>"
-    "<li>Expansion episodic rather than structural</li>"
-    "<li>Requires agility but not long-term redesign</li>"
-    "</ul>",
+    # ACC008 MetroServe - Medium
+    "<ul><li>Steady professional services growth with stable infrastructure needs</li><li>No urgent transformation signals but consistent improvement demand</li><li>Selective engagement suited for collaboration and performance plays</li></ul>",
 
-    # ACC008 — MetroServe Financial Advisory (Medium)
-    "<strong>Steady services growth with moderate infrastructure dependency.</strong>"
-    "<ul>"
-    "<li>Consistent client-facing digital operations</li>"
-    "<li>Moderate collaboration and secure access needs</li>"
-    "<li>No major structural expansion</li>"
-    "<li>Stable but incremental growth trajectory</li>"
-    "</ul>",
+    # ACC009 TerraLink - High
+    "<ul><li>Active fleet and IoT expansion across remote mining sites</li><li>Strong YoY growth with high intent signals in operational technology</li><li>Clear scale demand and strong product-market fit</li></ul>",
 
-    # ACC009 — TerraLink Mining Services (High)
-    "<strong>Remote operations scaling IoT and field connectivity.</strong>"
-    "<ul>"
-    "<li>Fleet and telemetry expansion</li>"
-    "<li>Remote site connectivity complexity</li>"
-    "<li>Increasing operational data flow from field to HQ</li>"
-    "<li>Rising resilience and coverage demands</li>"
-    "</ul>",
-
-    # ACC010 — EduCore Learning Services (Low)
-    "<strong>Limited growth and early-stage digital footprint.</strong>"
-    "<ul>"
-    "<li>Minimal expansion activity</li>"
-    "<li>Low ICT complexity</li>"
-    "<li>Small-scale operational model</li>"
-    "<li>Low infrastructure strain or urgency</li>"
-    "</ul>",
-
+    # ACC010 EduCore - Low
+    "<ul><li>Minimal growth and early-stage digital adoption</li><li>Very low ICT spend capacity with no modernization signals</li><li>No expansion activity detected in last 90 days</li></ul>",
     ],
+    
 }
     st.session_state["lead_prioritization_df"] = pd.DataFrame(mock_data)
     df_for_status = st.session_state["lead_prioritization_df"].copy()
