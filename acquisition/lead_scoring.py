@@ -2859,6 +2859,7 @@ st.session_state.setdefault("stop_process", False)
 st.session_state.setdefault("step_done", {})
 st.session_state.setdefault("log_html", {})
 st.session_state.setdefault("current_step", 0)
+st.session_state.setdefault("task_running", {})
 if "task_running" not in st.session_state:
     st.session_state.task_running = {}
 
@@ -2866,6 +2867,15 @@ if "task_running" not in st.session_state:
 # Main page
 # -------------------------------------------------------------------
 def lead_scoring_page(df=None):
+
+    # --- Ensure session state keys are always initialized ---
+    st.session_state.setdefault("run_process", False)
+    st.session_state.setdefault("stop_process", False)
+    st.session_state.setdefault("step_done", {})
+    st.session_state.setdefault("log_html", {})
+    st.session_state.setdefault("current_step", 0)
+    st.session_state.setdefault("task_running", {})
+    
     # --- CSS ---
     st.markdown(_get_global_css(), unsafe_allow_html=True)
 

@@ -295,7 +295,7 @@ AVEPOINT_SCOUTING_REPORT = {
             "network_and_cdn": ["CloudFlare", "Rackspace", "Verizon Wireless"],
             "security": ["Microsoft 365 Defender", "Azure Sentinel", "Sophos", "Tenable Nessus", "SentinelOne", "Barracuda Email Security"],
             "identity_and_access": ["Microsoft Active Directory", "Microsoft Entra", "OAuth", "OpenSSL"],
-            "crm_and_marketing": ["Salesforce CRM", "HubSpot", "Marketo", "LinkedIn Sales Navigator"],
+            "CRM_and_marketing": ["Salesforce CRM", "HubSpot", "Marketo", "LinkedIn Sales Navigator"],
             "data_and_analytics": ["Google Analytics", "Tableau", "Power BI", "MongoDB", "MySQL", "Elasticsearch"],
             "devops_and_development": ["Docker", "Kubernetes", "HashiCorp Terraform", "Git", "Ansible", "React", "Angular", "Node.js"],
             "collaboration": ["Microsoft Teams", "SharePoint Online", "Outlook.com"]
