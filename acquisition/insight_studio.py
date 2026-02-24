@@ -16,13 +16,27 @@ import textwrap
 # DEFAULT SALES INTELLIGENCE STATE
 # -----------------------------
 if "company_input_insight" not in st.session_state:
-    st.session_state.company_input_insight = "A-Mark Precious Metals"
+    st.session_state.company_input_insight = "AvePoint"
 
 if "insight_content_type" not in st.session_state:
     st.session_state.insight_content_type = "Scouting Report"
 
 if "insight_scope" not in st.session_state:
     st.session_state.insight_scope = "Content Generation"
+
+
+
+
+# FIXED — preserves acronyms like CRM, CDN, AI
+ACRONYMS = {"Crm", "Cdn", "Ai", "Iot", "Saas", "Erp", "Api", "Sdk", "Sso", "Orm"}
+
+def smart_title(s: str) -> str:
+    words = s.replace("_", " ").split()
+    result = []
+    for w in words:
+        titled = w.title()
+        result.append(titled.upper() if titled in ACRONYMS else titled)
+    return " ".join(result)
 
 
 
@@ -748,6 +762,8 @@ STATIC_QA["give me key insights on high priority accounts which i should target 
 # ----------------------------------------------------------------
 # Q2 — Deep Dive on AvePoint (replaces old A-Mark deep dive key)
 # ----------------------------------------------------------------
+
+
 STATIC_QA["give me a deep dive on avepoint"] = (
 
     "<h3 style='margin-bottom:6px;'>Deep-Dive on AvePoint</h3>"
@@ -764,9 +780,9 @@ STATIC_QA["give me a deep dive on avepoint"] = (
     "<ul>"
     "<li><b>Founded:</b> 2001</li>"
     "<li><b>Headquarters:</b> 525 Washington Blvd, Suite 1400, Jersey City, NJ 07310</li>"
-    "<li><b>Employees:</b> 500+</li>"
-    "<li><b>Revenue:</b> $100M – $500M</li>"
-    "<li><b>Industry:</b> Information Technology</li>"
+    "<li><b>Employees:</b> 2,934 (500+ range)</li>"
+    "<li><b>Revenue Range:</b> $100M – $500M</li>"
+    "<li><b>Industry:</b> Information Technology — Data Security Software Products</li>"
     "<li><b>Listed:</b> Nasdaq (AVPT) + SGX (dual-listed)</li>"
     "<li><b>Website:</b> https://www.avepoint.com/</li>"
     "<li><b>Corporate Line:</b> +1 201 793 1111</li>"
@@ -786,37 +802,40 @@ STATIC_QA["give me a deep dive on avepoint"] = (
 
     "<hr style='border:none; border-top:1px solid #ccc; margin:12px 0;'>"
 
+    "<h4>🛍️ Products &amp; Services</h4>"
+    "<p>AvePoint's platform centers on data protection, governance, and cloud management — spanning solutions such as "
+    "<b>AgentPulse Command Center, Cloud Governance, Multi-SaaS Cloud Backup, AvePoint Opus, and AvePoint tyGraph, </b>"
+    "<b>complemented by professional services across AI Governance, Data Resilience, Security Posture Management, </b>"
+    "<b>Regulatory Compliance, and Cloud Transformation.</b></p>"
+
+    "<hr style='border:none; border-top:1px solid #ccc; margin:12px 0;'>"
+
     "<h4>📊 Financial Interpretation</h4>"
-    "<p>AvePoint is in a high-growth SaaS expansion phase — accelerating revenue, improving profitability, "
-    "and building toward $1B ARR by 2029.</p>"
-    "<ul>"
-    "<li><b>Revenue Growth:</b> +24% YoY (2025 vs 2024) — strong SaaS-led momentum</li>"
-    "<li><b>Net Income Change:</b> +348% YoY — significant profitability improvement</li>"
-    "<li><b>ARR:</b> $390M in Q3 2025, targeting $1B by 2029</li>"
-    "<li><b>SaaS Growth:</b> +38% — accelerating cloud-first model</li>"
-    "<li><b>EPS:</b> -66.7% — dilution from 7.37M share offering to fund strategic growth</li>"
-    "</ul>"
+    "<p>AvePoint is in a strong SaaS-led growth phase with improving profitability and clear momentum toward scale. "
+    "<b>Revenue grew 24% YoY, driven by 38% SaaS growth, with ARR reaching $390M in Q3 2025 and a target of $1B ARR by 2029.</b> "
+    "Profitability has improved significantly, with non-GAAP operating <b> margin at 22% and net income growing sharply. </b>"
+    "The company recently raised capital via a public share offering to fund continued strategic expansion.</p>"
 
     "<hr style='border:none; border-top:1px solid #ccc; margin:12px 0;'>"
 
     "<h4>🚀 Growth Signals &amp; Recent Activity</h4>"
     "<p>AvePoint is in a full acceleration phase driven by acquisitions, AI product launches, and global market expansion.</p>"
     "<ul>"
-    "<li><b>Acquisition:</b> Acquired Ydentic to strengthen MSP automation and platform capabilities.</li>"
-    "<li><b>Dual Listing:</b> Listed on SGX alongside Nasdaq to accelerate global expansion.</li>"
-    "<li><b>New Product:</b> Launched AgentPulse — AI-driven security controls for AI agents.</li>"
-    "<li><b>Partnership:</b> Expanded Azure Data Protection globally via IAMCP partnership.</li>"
-    "<li><b>Capital Raise:</b> Priced a public offering of 7.37M shares to support strategic growth.</li>"
-    "<li><b>Market Focus:</b> Advancing multi-cloud strategy across enterprise and MSP-led channels.</li>"
+    "<li><b>Acquisition:</b> Acquired Ydentic to strengthen MSP automation and platform capabilities. <i>(Jan 15, 2025)</i></li>"
+    "<li><b>Dual Listing:</b> Became the first dual-listed B2B SaaS company on Nasdaq and the Singapore Exchange (SGX). <i>(Sep 19, 2025)</i></li>"
+    "<li><b>New Product:</b> Launched AgentPulse Command Center — AI-driven security controls for AI agents. <i>(Nov 18, 2025)</i></li>"
+    "<li><b>Partnership:</b> Expanded Azure Data Protection globally via IAMCP partnership with enhanced marketplace integrations. <i>(Oct 28, 2025)</i></li>"
+    "<li><b>Capital Raise:</b> Priced a public offering of 7.37M shares of common stock to fund strategic growth. <i>(Sep 16, 2025)</i></li>"
+    "<li><b>Market Focus:</b> Advancing multi-cloud strategy — targeting 30% of ARR from non-Microsoft platforms by 2029.</li>"
     "</ul>"
 
     "<hr style='border:none; border-top:1px solid #ccc; margin:12px 0;'>"
 
     "<h4>🎯 Intent Signals</h4>"
     "<ul>"
-    "<li><b>Security Network (Score: 85):</b> zero trust architecture, SIEM platforms, endpoint detection, cloud security posture, threat analytics</li>"
-    "<li><b>Cloud Services (Score: 80):</b> multi-cloud optimisation, cloud scalability, CDN performance, workload distribution</li>"
-    "<li><b>Digital Infrastructure (Score: 78):</b> SD-WAN optimisation, global backbone connectivity, carrier benchmarking, network resilience</li>"
+    "<li><b>Security Network:</b> Very High — zero trust architecture, SIEM platforms, endpoint detection, cloud security posture, threat analytics</li>"
+    "<li><b>Cloud Services:</b> High — multi-cloud optimisation, cloud scalability, CDN performance, workload distribution</li>"
+    "<li><b>Digital Infrastructure:</b> High — SD-WAN optimisation, global backbone connectivity, carrier benchmarking, network resilience</li>"
     "<li><b>Competitor Products Researched:</b> AWS, Microsoft Azure, Cloudflare, Salesforce</li>"
     "</ul>"
 
@@ -824,9 +843,12 @@ STATIC_QA["give me a deep dive on avepoint"] = (
 
     "<h4>💡 Top Recommendations</h4>"
     "<ul>"
-    "<li><b>1. SASE (Fit: 0.9)</b> — Enterprise security modernization aligned to strong network intent and multi-site footprint.</li>"
-    "<li><b>2. Colocation (Fit: 0.85)</b> — Infrastructure scaling requires centralized high-performance connectivity.</li>"
-    "<li><b>3. Cloud Voice with Microsoft Teams (Fit: 0.80)</b> — Cloud-native collaboration consolidation across Microsoft ecosystem.</li>"
+    "<li><b>1. SASE</b> <i>(Cybersecurity Services)</i>"
+    " — Enterprise security modernization aligned to strong network intent and multi-site footprint.</li>"
+    "<li><b>2. Colocation / Dedicated Fiber</b> <i>(Cloud)</i>"
+    " — Infrastructure scaling requires centralized high-performance connectivity.</li>"
+    "<li><b>3. Cloud Voice with Microsoft Teams</b> <i>(Voice and Collaboration)</i>"
+    " — Cloud-native collaboration consolidation across Microsoft ecosystem.</li>"
     "</ul>"
 
     "<hr style='border:none; border-top:1px solid #ccc; margin:14px 0;'>"
@@ -1139,7 +1161,7 @@ def render_sales_report(report: Dict[str, Any]):
     with st.expander("Technology Landscape 💻", expanded=True):
         tech = report["tech_landscape"]["tech_stack"]
         for k, v in tech.items():
-            render_kv(k.replace("_", " ").title(), ", ".join(v))
+            render_kv(smart_title(k), ", ".join(v))
 
     # Campaign
     with st.expander("Campaign Strategy 📧", expanded=True):
@@ -1494,6 +1516,8 @@ def insight_studio_page():
         st.session_state.insight_scope = "Content Generation"
     if "insight_content_type" not in st.session_state:
         st.session_state.insight_content_type = "Scouting Report"
+    if "run_insight_generation" not in st.session_state:
+        st.session_state.run_insight_generation = False
 
     st.session_state.setdefault("company_input_insight", "AvePoint")
 
@@ -1668,6 +1692,10 @@ def insight_studio_page():
     # --- Scouting Report ---
     
     if content_type == "Scouting Report":
+        if not st.session_state.get("run_insight_generation", False):
+            st.info("Select your options and click **Generate** to produce the report.")
+            st.markdown("</div>", unsafe_allow_html=True)
+            return
         company = company_name.lower().strip()
 
         if company == "wolfspeed":
@@ -1675,12 +1703,6 @@ def insight_studio_page():
                 time.sleep(6)
             st.success("Showing scouting report for Wolfspeed")
             render_sales_report(WOLFSPEED_SCOUTING_REPORT)
-
-        # elif company in ["a-mark", "amark", "a-mark precious metals", "a mark", "a mark precious metals"]:
-        #     with st.spinner("⚙️ Generating A-Mark Precious Metals scouting report..."):
-        #         time.sleep(6)
-        #     st.success("Showing scouting report for A-Mark Precious Metals")
-        #     render_sales_report(A_MARK_SCOUTING_REPORT)
 
         elif company in ["avepoint"]:
             with st.spinner("⚙️ Generating AvePoint scouting report..."):
@@ -1698,10 +1720,13 @@ def insight_studio_page():
         return
 
 
-
-   
-    # --- Seller Pitch  ---
+    # --- Seller Pitch ---
     if content_type == "Seller Pitch":
+        if not st.session_state.get("run_insight_generation", False):
+            st.info("Select your options and click **Generate** to produce the pitch.")
+            st.markdown("</div>", unsafe_allow_html=True)
+            return
+        
         company = company_name.lower().strip()
 
         if company in ["a-mark", "amark", "a-mark precious metals", "a mark", "a mark precious metals"]:
@@ -1729,33 +1754,33 @@ def insight_studio_page():
         return
 
 
-    # --- Marketing Campaign / Marketing Email ---
+    # --- Personalized Email ---
     if content_type == "Personalized Email":
+        if not st.session_state.get("run_insight_generation", False):
+            st.info("Select your options and click **Generate** to produce the email.")
+            st.markdown("</div>", unsafe_allow_html=True)
+            return
         
         if company_name.lower() == "wolfspeed":
             with st.spinner("⚙️ Generating personalized email for Wolfspeed..."):
                 time.sleep(6)
-            st.success(f"Showing marketing email for Wolfspeed")
+            st.success("Showing marketing email for Wolfspeed")
             render_marketing_email_wolfspeed()
-        
-        elif company_name.lower() in ["a-mark", "amark", "a-mark precious metals", "a mark", "a mark precious metals"]:  
+
+        elif company_name.lower() in ["a-mark", "amark", "a-mark precious metals", "a mark", "a mark precious metals"]:
             with st.spinner("⚙️ Generating personalized email for A-Mark Precious Metals..."):
                 time.sleep(6)
             st.success("Showing marketing email for A-Mark Precious Metals")
             render_marketing_email_amark()
 
-        elif company_name.lower() in ["avepoint"]:  
+        elif company_name.lower() in ["avepoint"]:
             with st.spinner("⚙️ Generating personalized email for AvePoint..."):
                 time.sleep(6)
             st.success("Showing marketing email for AvePoint")
             render_marketing_email_avepoint()
-        
+
         else:
             st.warning("No marketing email available for this company.")
-        
+
         st.markdown("</div>", unsafe_allow_html=True)
         return
-
-    st.markdown("</div>", unsafe_allow_html=True)
-
-

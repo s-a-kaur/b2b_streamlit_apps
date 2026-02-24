@@ -83,6 +83,8 @@ def _clear_right_side():
     if "company_input" in st.session_state and st.session_state.company_input:
         st.session_state["last_selected_company"] = st.session_state.company_input
 
+    st.session_state["run_insight_generation"] = False
+
     for k in list(st.session_state.keys()):
         if k not in keep:
             try:
@@ -101,6 +103,8 @@ def _handle_insight_generation():
 
 
 def _reset_company_on_content_change():
+
+    st.session_state.run_insight_generation = False
     st.session_state.company_input_insight = (
         st.session_state.get("company_input")
         or st.session_state.get("last_selected_company")
@@ -109,6 +113,9 @@ def _reset_company_on_content_change():
 
 
 def _render_insight_sidebar_inputs():
+
+    if "company_input_insight" not in st.session_state:
+        st.session_state.company_input_insight = "AvePoint"
     st.markdown("<br>", unsafe_allow_html=True)
     st.markdown("<div class='scope-title'>Insight Scope</div>", unsafe_allow_html=True)
 
@@ -133,7 +140,7 @@ def _render_insight_sidebar_inputs():
         st.text_input(
             "Target Company",
             key="company_input_insight",
-            value = "AvePoint",
+            # value = "AvePoint",
             disabled=False,
             help="To change the company, switch back to Lead Management."
         )
