@@ -904,7 +904,7 @@ if "lead_prioritization_df" not in st.session_state:
         "⚪ Low — Minimal digital tools supporting basic online service delivery",
     ],
     "Tech Relevancy": [
-        "🟡 Medium — Clear opportunity to upsell Ethernet, security, and bandwidth expansion",
+        "⭐ High — Enterprise-grade networking, multi-cloud infrastructure, and mature security stack",
         "🟡 Medium — Suitable for SD-WAN, secure internet, and scalable connectivity solutions",
         "🟡 Medium — Strong relevance for security enhancements and network optimization",
         "🟡 Medium — Backup connectivity, traffic prioritization, and security are key needs",
