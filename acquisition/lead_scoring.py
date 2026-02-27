@@ -3010,16 +3010,19 @@ def lead_scoring_page(df=None):
         "November Lead List — Expansion Accounts",
     )
 
+
     st.markdown(
-        """<h3 class='main-title'><span style='font-size: 1.1em;'>🎯</span>
-        Lead Scoring &amp; Prioritization Console</h3>""",
-        unsafe_allow_html=True,
-    )
+    """<h3 class='main-title'><span style='font-size: 1.1em;'>🎯</span>
+    Lead Intelligence &amp; Recommendation Console</h3>""",
+    unsafe_allow_html=True,)
 
     st.markdown(
         """<p class='panel-desc-left'>
-        This console converts Customer 360° signals into explainable lead scores and
-        priority segments, aligned to your GTM objective.</p>""",
+        This console converts external Customer 360° intelligence into prioritized new-logo opportunities. 
+        By leveraging firmographic, technographic, growth, spend, financial, and intent signals, 
+        it generates transparent lead scores and product-aligned recommendations — 
+        with clear reasoning behind both the prioritization and the recommended solutions.
+        </p>""",
         unsafe_allow_html=True,
     )
 

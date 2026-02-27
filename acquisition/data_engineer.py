@@ -1566,7 +1566,7 @@ def data_engineer_page():
 
                 radio_options = [
                     "Data Ingestion & Enrichment",
-                    "Lead Scoring & Prioritization",
+                    "Prioritization & Recommendation"
                 ]
 
                 st.markdown("<div class='lead-scope-radio'>", unsafe_allow_html=True)
